@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
+import useAlertStore from "./alert-storage";
 
 type FormValue = 'LogIn' | 'Create an account'
 
@@ -14,6 +15,8 @@ const useAuthStore = defineStore("auth", () => {
   const password = ref<string>("");
   const passwordConfirm = ref<string>("");
 
+  const alertStore = useAlertStore()
+
   const changeForm = (): void => {
     registration.value = !registration.value;
     if (title.value === "LogIn") {
@@ -25,18 +28,30 @@ const useAuthStore = defineStore("auth", () => {
       buttonText.value = "LogIn";
       linkText.value = "Create an account";
     }
+    clearForm()
   }
 
   async function submitForm (): Promise<void> {
-    if (registration) {
-
+    if (!password.value) {
+      alertStore.setAlert('warning', 'You should input the password!', 'Error')
+    } else if (!userName.value) {
+      alertStore.setAlert('warning', 'You should input the username!', 'Error')
     } else {
+      if (registration) {
 
+      } else {
+  
+      }
     }
-    userName.value = ''
+    clearForm()
+  }
+
+  function clearForm () {
     password.value = ''
     passwordConfirm.value = ''
+    userName.value = ''
   }
+
 
   return {
     submitForm,
@@ -49,7 +64,7 @@ const useAuthStore = defineStore("auth", () => {
     title,
     linkText,
     buttonText,
-    changeForm,
+    changeForm
   };
 });
 

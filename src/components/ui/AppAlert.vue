@@ -1,13 +1,20 @@
 <template>
   <v-alert 
     closable 
-    icon="mdi-check-circle" 
-    title="Alert title" 
-    text="Lorem1023frewybhr56e3g4yhbwservc43wtbdfs sb verswg rtn ty ktuynber4vcsrt byt"
-    width="70%"
+    :icon="alertStore.icon" 
+    :title="alertStore.title" 
+    :text="alertStore.message"
+    :type="alertStore.type"
+    width="100%"
     class="ma-auto"
+    density="compact"
   >
   </v-alert>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import useAlertStore from '../../stores/alert-storage'
+
+const alertStore = useAlertStore()
+
+</script>
