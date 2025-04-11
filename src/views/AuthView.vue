@@ -1,13 +1,14 @@
 <template>
     <v-main class="ma-auto">
         <v-card class="mb-7 mt-10 bg-blue-grey-darken-3 rounded-lg ma-auto d-flex flex-column justify-center align-center pa-16 ga-2" :title="authStore.title" width="400">
-        <v-form @submit.prevent="" class="d-flex justify-center flex-column ga-5">
+        <v-form @submit.prevent="authStore.submitForm" class="d-flex justify-center flex-column ga-5">
           <v-text-field 
             variant="outlined" 
             label="User name" 
             width="300" 
             clearable
             autocomplete="username"
+            v-model="authStore.userName"
           ></v-text-field>
           <v-text-field 
             variant="outlined" 
@@ -18,6 +19,7 @@
             :append-inner-icon="authStore.showFirst? 'mdi-eye' : 'mdi-eye-off'"
             @click:append-inner="authStore.showFirst = !authStore.showFirst"
             autocomplete="username"
+            v-model="authStore.password"
           >
           </v-text-field>
           <v-text-field
@@ -30,6 +32,7 @@
             :append-inner-icon="authStore.showSecond? 'mdi-eye' : 'mdi-eye-off'"
             @click:append-inner="authStore.showSecond = !authStore.showSecond"
             autocomplete="username"
+            v-model="authStore.passwordConfirm"
           >
           </v-text-field>
           <v-btn type="submit" append-icon="mdi-login" color="green">{{ authStore.buttonText }}</v-btn>

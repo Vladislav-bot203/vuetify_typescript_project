@@ -10,6 +10,9 @@ const useAuthStore = defineStore("auth", () => {
   const title = ref<FormValue>("LogIn");
   const linkText = ref<FormValue>("Create an account");
   const buttonText = ref<string>("LogIn");
+  const userName = ref<string>("")
+  const password = ref<string>("");
+  const passwordConfirm = ref<string>("");
 
   const changeForm = (): void => {
     registration.value = !registration.value;
@@ -24,7 +27,22 @@ const useAuthStore = defineStore("auth", () => {
     }
   }
 
+  async function submitForm (): Promise<void> {
+    if (registration) {
+
+    } else {
+
+    }
+    userName.value = ''
+    password.value = ''
+    passwordConfirm.value = ''
+  }
+
   return {
+    submitForm,
+    userName,
+    password,
+    passwordConfirm,
     showFirst,
     showSecond,
     registration,
