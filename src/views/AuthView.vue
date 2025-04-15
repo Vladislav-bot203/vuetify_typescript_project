@@ -2,12 +2,13 @@
   <v-main class="ma-auto">
     <v-card
       class="mb-7 mt-10 bg-blue-grey-darken-3 rounded-lg ma-auto d-flex flex-column justify-center align-center pa-16 ga-2"
-      :title="authStore.title"
+      :title="title"
       width="400"
     >
       <v-form
         @submit.prevent="authStore.submitForm"
         class="d-flex justify-center flex-column ga-5"
+        ref="form"
       >
         <v-text-field
           variant="outlined"
@@ -46,14 +47,14 @@
         >
         </v-text-field>
         <v-btn type="submit" append-icon="mdi-login" color="green">{{
-          authStore.buttonText
+          buttonText
         }}</v-btn>
       </v-form>
-      <span class="account-creation" @click="handleFormChange">{{
-        authStore.linkText
+      <span class="account-creation" @click="changeForm">{{
+        linkText
       }}</span>
     </v-card>
-    <app-alert v-if="alertStore.isVisible"></app-alert>
+    <app-alert v-if="inputVisibility"></app-alert>
   </v-main>
 </template>
 
@@ -61,20 +62,41 @@
 import AppAlert from "../components/ui/AppAlert.vue";
 import useAuthStore from "../stores/auth-storage";
 import useAlertStore from "../stores/alert-storage.ts";
-import { ref, watch} from 'vue'
+import { computed, ref } from "vue";
+
+type FormValue = 'LogIn' | 'Create an account'
 
 const authStore = useAuthStore();
 const alertStore = useAlertStore();
 
-const handleFormChange = () => {
-  authStore.changeForm()
-}
+const title = ref<FormValue>("LogIn");
+const linkText = ref<FormValue>("Create an account");
+const buttonText = ref<string>("LogIn");
+const form = ref()
+
+const inputVisibility = computed<boolean>(() => alertStore.isVisible)
+
+function changeForm (): void {
+    authStore.changeForm()
+    if (title.value === "LogIn") {
+      title.value = "Create an account";
+      buttonText.value = "Create";
+      linkText.value = "LogIn";
+    } else {
+      title.value = "LogIn";
+      buttonText.value = "LogIn";
+      linkText.value = "Create an account";
+    }
+    form.value?.reset();
+    form.value?.resetValidation();
+  }
 
 const rules = {
-  counter: (value) => value.length <= 20 || "Max 20 characters",
-  minLen: (value) => value.length >= 8 || "Min 8 characters",
-  passwordConfirm: () => authStore.password === authStore.passwordConfirm || "The password doesn't match the original",
-  email: (value) => {
+  counter: (value: string) => !value || value.length <= 20 || "Max 20 characters",
+  minLen: (value: string) => !value || value.length >= 8 || "Min 8 characters",
+  passwordConfirm: () => !authStore.passwordConfirm || authStore.password === authStore.passwordConfirm || "The password doesn't match the original",
+  email: (value: string) => {
+    if (!value) return true;
     const pattern =
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return pattern.test(value) || "Invalid e-mail.";

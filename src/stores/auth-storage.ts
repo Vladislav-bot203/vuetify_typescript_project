@@ -1,49 +1,81 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import useAlertStore from "./alert-storage";
-
-type FormValue = 'LogIn' | 'Create an account'
+import { useRouter } from "vue-router";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import useUserStore from "./user-storage";
 
 const useAuthStore = defineStore("auth", () => {
   const showFirst = ref<boolean>(false);
   const showSecond = ref<boolean>(false);
   const registration = ref<boolean>(false);
-  const title = ref<FormValue>("LogIn");
-  const linkText = ref<FormValue>("Create an account");
-  const buttonText = ref<string>("LogIn");
   const userName = ref<string>("")
   const password = ref<string>("");
   const passwordConfirm = ref<string>("");
+  const isLoading = ref<boolean>(false);
+  const userStore = useUserStore();
+  const router = useRouter();
 
   const alertStore = useAlertStore()
 
-  const changeForm = (): void => {
-    registration.value = !registration.value;
-    if (title.value === "LogIn") {
-      title.value = "Create an account";
-      buttonText.value = "Create";
-      linkText.value = "LogIn";
-    } else {
-      title.value = "LogIn";
-      buttonText.value = "LogIn";
-      linkText.value = "Create an account";
+  async function submitForm (): Promise<void> {
+    if (!isLoading.value) {
+      if (!userName.value) {
+        alertStore.setAlert('warning', 'You should input the correct username!', 'Error');
+      } else if (!password.value || password.value.length < 8 || password.value.length > 20 || passwordConfirm.value != password.value) {
+        alertStore.setAlert('warning', 'You should input the correct password!', 'Error');
+      } else {
+        if (registration.value) {
+          await signUp();
+        } else {
+          await signIn();
+        }
+      }
+      clearForm()
     }
-    clearForm()
   }
 
-  async function submitForm (): Promise<void> {
-    if (!password.value) {
-      alertStore.setAlert('warning', 'You should input the password!', 'Error')
-    } else if (!userName.value) {
-      alertStore.setAlert('warning', 'You should input the username!', 'Error')
-    } else {
-      if (registration) {
-
-      } else {
-  
+  async function signUp (): Promise<void> {
+    isLoading.value = true;
+    try {
+      const auth = getAuth();
+      await createUserWithEmailAndPassword(auth, userName.value, password.value);
+      clearForm()
+      router.push('/')
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        alertStore.setAlert('warning', e.message, e.name)
       }
+    } finally {
+      isLoading.value = false;
     }
-    clearForm()
+  }
+
+  async function signIn (): Promise<void> {
+    isLoading.value = true;
+    try {
+      const auth = getAuth();
+      await signInWithEmailAndPassword(auth, userName.value, password.value);
+      clearForm()
+      router.push({ name: 'Home' })
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        alertStore.setAlert('warning', e.message, e.name)
+      }
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  const signOutMethod = async (): Promise<void> => {
+    await signOut(getAuth());
+    router.push('/auth');
+    userStore.userId = '';
+    router.push({ name: 'Auth' })
+  }
+
+  function changeForm () {
+    registration.value = !registration.value
   }
 
   function clearForm () {
@@ -55,16 +87,14 @@ const useAuthStore = defineStore("auth", () => {
 
   return {
     submitForm,
+    changeForm,
+    signOutMethod,
     userName,
     password,
     passwordConfirm,
     showFirst,
     showSecond,
     registration,
-    title,
-    linkText,
-    buttonText,
-    changeForm
   };
 });
 
