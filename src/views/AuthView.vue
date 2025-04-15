@@ -49,10 +49,15 @@
         <v-btn type="submit" append-icon="mdi-login" color="green">{{
           buttonText
         }}</v-btn>
+        <v-progress-linear
+          color="deep-purple-accent-4"
+          height="6"
+          indeterminate
+          rounded
+          v-if="loading"
+        ></v-progress-linear>
       </v-form>
-      <span class="account-creation" @click="changeForm">{{
-        linkText
-      }}</span>
+      <span class="account-creation" @click="changeForm">{{ linkText }}</span>
     </v-card>
     <app-alert v-if="inputVisibility"></app-alert>
   </v-main>
@@ -64,37 +69,28 @@ import useAuthStore from "../stores/auth-storage";
 import useAlertStore from "../stores/alert-storage.ts";
 import { computed, ref } from "vue";
 
-type FormValue = 'LogIn' | 'Create an account'
-
 const authStore = useAuthStore();
 const alertStore = useAlertStore();
 
-const title = ref<FormValue>("LogIn");
-const linkText = ref<FormValue>("Create an account");
-const buttonText = ref<string>("LogIn");
-const form = ref()
+const form = ref();
+const inputVisibility = computed<boolean>(() => alertStore.isVisible);
+const buttonText = computed<string>(() => authStore.buttonText);
+const title = computed<string>(() => authStore.title);
+const linkText = computed<string>(() => authStore.linkText);
+const loading = computed<boolean>(() => authStore.isLoading)
 
-const inputVisibility = computed<boolean>(() => alertStore.isVisible)
-
-function changeForm (): void {
-    authStore.changeForm()
-    if (title.value === "LogIn") {
-      title.value = "Create an account";
-      buttonText.value = "Create";
-      linkText.value = "LogIn";
-    } else {
-      title.value = "LogIn";
-      buttonText.value = "LogIn";
-      linkText.value = "Create an account";
-    }
-    form.value?.reset();
-    form.value?.resetValidation();
-  }
+function changeForm(): void {
+  authStore.changeForm(form);
+}
 
 const rules = {
-  counter: (value: string) => !value || value.length <= 20 || "Max 20 characters",
+  counter: (value: string) =>
+    !value || value.length <= 20 || "Max 20 characters",
   minLen: (value: string) => !value || value.length >= 8 || "Min 8 characters",
-  passwordConfirm: () => !authStore.passwordConfirm || authStore.password === authStore.passwordConfirm || "The password doesn't match the original",
+  passwordConfirm: () =>
+    !authStore.passwordConfirm ||
+    authStore.password === authStore.passwordConfirm ||
+    "The password doesn't match the original",
   email: (value: string) => {
     if (!value) return true;
     const pattern =
