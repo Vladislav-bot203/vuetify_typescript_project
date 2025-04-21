@@ -64,7 +64,7 @@
 </template>
 
 <script setup lang="ts">
-import AppAlert from "../components/ui/AppAlert.vue";
+import AppAlert from "../components/AppAlert.vue";
 import useAuthStore from "../stores/auth-storage";
 import useAlertStore from "../stores/alert-storage.ts";
 import { computed, ref } from "vue";
@@ -77,7 +77,7 @@ const inputVisibility = computed<boolean>(() => alertStore.isVisible);
 const buttonText = computed<string>(() => authStore.buttonText);
 const title = computed<string>(() => authStore.title);
 const linkText = computed<string>(() => authStore.linkText);
-const loading = computed<boolean>(() => authStore.isLoading)
+const loading = computed<boolean>(() => authStore.isLoading);
 
 function changeForm(): void {
   authStore.changeForm(form);
