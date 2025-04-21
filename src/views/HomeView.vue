@@ -1,8 +1,7 @@
 <template>
-
+    <div>3qfwewefvtrvresfdvrg</div>
 </template>
 
 <script setup lang="ts">
-import TheNavBar from '../components/TheNavBar.vue'
 
 </script>

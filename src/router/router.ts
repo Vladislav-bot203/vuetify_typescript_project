@@ -26,6 +26,22 @@ const routes: RouteRecordRaw[] = [
       layout: "Auth",
     },
   },
+  {
+    path: "/interviews",
+    name: "Interviews",
+    component: () => import("../views/InterviewsView.vue"),
+    meta: {
+      layout: "Main",
+    },
+  },
+  {
+    path: "/statistics",
+    name: "Statistics",
+    component: () => import("../views/StatisticsView.vue"),
+    meta: {
+      layout: "Main",
+    },
+  },
 ];
 
 const router = createRouter({
