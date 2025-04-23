@@ -32,12 +32,14 @@
 import { ref } from "vue";
 import { signOut, getAuth } from 'firebase/auth';
 import { useRouter, useRoute } from "vue-router";
+import useUserStore from "../stores/user-storage";
 
 const route = useRoute();
 const router = useRouter();
 const drawer = ref<boolean>(true);
 const rail = ref<boolean>(true);
 const selectedItem = ref<string[]>([route.path]);
+const userStore = useUserStore();
 
 const handleSelection = (newSelection: string[]): void => {
   if (newSelection.length === 0 && selectedItem.value.length > 0) {
@@ -48,6 +50,7 @@ const handleSelection = (newSelection: string[]): void => {
 
 async function logout(): Promise<void> {
   await signOut(getAuth());
+  userStore.userId = '';
   router.push({ name: 'Auth' });
 }
 
