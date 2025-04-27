@@ -29,7 +29,7 @@
           :append-inner-icon="authStore.showFirst ? 'mdi-eye' : 'mdi-eye-off'"
           @click:append-inner="authStore.showFirst = !authStore.showFirst"
           autocomplete="username"
-          v-model="authStore.password"
+          v-model.trim="authStore.password"
         >
         </v-text-field>
         <v-text-field
@@ -59,7 +59,7 @@
       </v-form>
       <span class="account-creation" @click="changeForm">{{ linkText }}</span>
     </v-card>
-    <app-alert v-if="inputVisibility"></app-alert>
+    <app-alert v-if="alertVisibility"></app-alert>
   </v-main>
 </template>
 
@@ -73,7 +73,7 @@ const authStore = useAuthStore();
 const alertStore = useAlertStore();
 
 const form = ref();
-const inputVisibility = computed<boolean>(() => alertStore.isVisible);
+const alertVisibility = computed<boolean>(() => alertStore.isVisible);
 const buttonText = computed<string>(() => authStore.buttonText);
 const title = computed<string>(() => authStore.title);
 const linkText = computed<string>(() => authStore.linkText);
