@@ -35,7 +35,9 @@
 
         <template #item.id="{ item }">
             <span class="d-flex ga-2 justify-center	">
-                <v-btn icon="mdi-pencil-box" color="deep-orange-lighten-1"></v-btn>
+                <router-link :to="`/interview/${item.id}`" v-slot="{navigate}" custom>
+                  <v-btn icon="mdi-pencil-box" color="deep-orange-lighten-1" @click="navigate"></v-btn>
+                </router-link>
                 <v-btn icon="mdi-delete-outline" color="red-accent-3"></v-btn>
             </span>
         </template>

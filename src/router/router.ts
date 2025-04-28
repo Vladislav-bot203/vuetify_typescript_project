@@ -42,6 +42,14 @@ const routes: RouteRecordRaw[] = [
       layout: "Main",
     },
   },
+  {
+    path: "/interview/:id?",
+    name: "Interview",
+    component: () => import("../views/InterviewView.vue"),
+    meta: {
+      layout: "Main",
+    },
+  },
 ];
 
 const router = createRouter({
