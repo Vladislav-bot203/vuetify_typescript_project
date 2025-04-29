@@ -22,7 +22,7 @@ export default function useEditInterview() {
       const salaryTo = computed(() => interview.value?.salaryTo);
       const result = computed(() => interview.value?.result ?? "Unset");
 
-      const stages = ref<Array<Stage> | undefined>(interview.value?.stages);
+      const stages = ref<Array<Stage> | []>(interview.value?.stages ?? []);
 
       function addStage() {
         stages.value = [...(stages.value || []), { name: "", date: null, description: "" }];
@@ -41,6 +41,12 @@ export default function useEditInterview() {
         }
       }
 
+      function updateStage(id: number, updatedStage: Stage) {
+        if (stages.value) {
+          stages.value[id] = updatedStage;
+        }
+      }
+
       return {
         getInterview,
         company,
@@ -54,6 +60,7 @@ export default function useEditInterview() {
         result,
         stages,
         addStage,
-        deleteStage
+        deleteStage,
+        updateStage
       }
 } 

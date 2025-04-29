@@ -17,37 +17,37 @@
             autocomplete="off"
             variant="outlined"
             label="Company"
-            :model-value="company"
+            v-model="company"
           ></v-text-field>
           <v-text-field
             autocomplete="off"
             variant="outlined"
             label="Description link"
-            :model-value="description"
+            v-model="description"
           ></v-text-field>
           <v-text-field
             autocomplete="off"
             variant="outlined"
             label="HR Name"
-            :model-value="name"
+            v-model="name"
           ></v-text-field>
           <v-text-field
             autocomplete="off"
             variant="outlined"
             label="Telegram"
-            :model-value="telegram"
+            v-model="telegram"
           ></v-text-field>
           <v-text-field
             autocomplete="off"
             variant="outlined"
             label="WhatsApp"
-            :model-value="whatsApp"
+            v-model="whatsApp"
           ></v-text-field>
           <v-text-field
             autocomplete="off"
             variant="outlined"
             label="Phone Number"
-            :model-value="phone"
+            v-model="phone"
           ></v-text-field>
           <v-container
             class="d-flex justify-space-between pa-0 ga-4"
@@ -58,14 +58,14 @@
               variant="outlined"
               autocomplete="off"
               label="Salary From"
-              :model-value="salaryFrom"
+              v-model="salaryFrom"
             ></v-text-field>
             <v-text-field
               type="number"
               variant="outlined"
               autocomplete="off"
               label="Salary To"
-              :model-value="salaryTo"
+              v-model="salaryTo"
             ></v-text-field>
           </v-container>
           <v-btn
@@ -75,15 +75,21 @@
             @click="addStage"
           ></v-btn>
         </v-container>
-        <v-container class="pa-0" v-if="stages">
-          <app-stage v-for="(stage, id) in stages" :key="id" :stage="stage" @remove="deleteStage(id)"></app-stage>
+        <v-container class="pa-0" v-if="stages.length">
+          <app-stage 
+            v-for="(stage, id) in stages" 
+            :key="id" 
+            :stage="stage" 
+            @remove="deleteStage(id)"
+            @update:stage="updateStage(id, $event)"
+          ></app-stage>
         </v-container>
         <v-container
           class="pa-3 bg-blue-grey-darken-1 d-flex justify-center align-center rounded-lg mb-6"
           min-width="350"
           style="border: 2px solid #2979ff"
         >
-          <v-radio-group inline class="d-flex justify-center" :model-value="result">
+          <v-radio-group inline class="d-flex justify-center" v-model="result">
             <v-radio value="Offer" label="Offer" color="success"></v-radio>
             <v-radio value="Refusal" label="Refusal" color="error"></v-radio>
             <v-radio value="Unset" label="Unset" color="primary"></v-radio>
@@ -116,7 +122,8 @@ const {
   result,
   stages,
   addStage,
-  deleteStage
+  deleteStage,
+  updateStage
 } = editInterview;
 
 onMounted(() => {

@@ -9,7 +9,7 @@
       variant="outlined"
       label="Stage Name"
       width="100%"
-      :model-value="stage.name"
+      v-model="props.stage.name"
     ></v-text-field>
     <v-date-picker
       title="Interview date"
@@ -18,7 +18,7 @@
       bg-color="blue-grey-darken-2"
       header-color="blue-grey-darken-3"
       min-width="350"
-      :model-value="stage.date"
+      v-model="props.stage.date"
     >
     </v-date-picker>
     <v-textarea
@@ -29,23 +29,27 @@
       width="90%"
       bg-color="blue-grey-darken-2"
       no-resize
-      :model-value="stage.description"
+      v-model="props.stage.description"
     ></v-textarea>
-    <v-btn color="red-accent-3" icon="mdi-trash-can-outline" @click="handleRemove"></v-btn>
+    <v-btn
+      color="red-accent-3"
+      icon="mdi-trash-can-outline"
+      @click="handleRemove"
+    ></v-btn>
   </v-container>
 </template>
 
 <script lang="ts" setup>
-import { defineProps, defineEmits } from 'vue';
-import type { Stage } from '../stores/interviews-storage';
+import { defineProps, watch, defineEmits } from "vue";
 
-const emit = defineEmits(['remove'])
+const props = defineProps(["stage"]);
+const emits = defineEmits(["update:stage", "remove"]);
 
-const { stage } = defineProps<{
-    stage: Stage
-}>()
+watch(props.stage, (newVal) => {
+  emits("update:stage", newVal);
+});
 
 function handleRemove() {
-    emit('remove');
+  emits("remove");
 }
 </script>
