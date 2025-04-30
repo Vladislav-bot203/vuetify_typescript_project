@@ -33,6 +33,14 @@
           </a>
         </template>
 
+        <template #item.result="{ item }">
+          <app-result :result="item.result ?? 'Unset'"></app-result>
+        </template>
+
+        <template #item.stages="{ item }">
+          <app-passed-stages :stages="item.stages"></app-passed-stages>
+        </template>
+
         <template #item.id="{ item }">
             <span class="d-flex ga-2 justify-center	">
                 <router-link :to="`/interview/${item.id}`" v-slot="{navigate}" custom>
@@ -51,6 +59,8 @@ import AppPage from "../components/ui/AppPage.vue";
 import useInterviewsStore from "../stores/interviews-storage";
 import useInterviewsList from "../hooks/interviewsList";
 import { onMounted, computed } from "vue";
+import AppResult from "../components/AppResult.vue";
+import AppPassedStages from "../components/AppPassedStages.vue";
 
 const interviewsStore = useInterviewsStore();
 const interviewsList = useInterviewsList();
