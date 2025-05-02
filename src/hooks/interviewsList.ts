@@ -81,10 +81,10 @@ export default function useInterviewsList() {
     interviewsStore.interviews = listDocs.docs.map(
       (doc) => doc.data() as Interview
     );
-  };
+  }
 
-  async function deleteInterview(): Promise<void> {
-
+  async function deleteInterview(id: string): Promise<void> {
+    interviewsStore.removeInterview(id);
   }
 
   return {

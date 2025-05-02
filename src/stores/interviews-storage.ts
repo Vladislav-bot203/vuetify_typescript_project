@@ -2,9 +2,9 @@ import { defineStore } from "pinia";
 import { ref } from "vue";
 
 export interface Stage {
-    name: string
-    date: Date | null
-    description: string
+  name: string;
+  date: Date | null;
+  description: string;
 }
 
 export interface Interview {
@@ -25,8 +25,15 @@ export interface Interview {
 const useInterviewsStore = defineStore("interviews", () => {
   const interviews = ref<Array<Interview>>();
 
+  function removeInterview(id: string) {
+    interviews.value = interviews.value?.filter(
+      (interview: Interview): boolean => interview.id !== id
+    );
+  }
+
   return {
-    interviews
+    interviews,
+    removeInterview
   };
 });
 

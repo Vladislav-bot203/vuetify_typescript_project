@@ -44,7 +44,7 @@
                 @click="navigate"
               ></v-btn>
             </router-link>
-            <v-btn icon="mdi-delete-outline" color="red-accent-3"></v-btn>
+            <app-confirm :id="item.id"></app-confirm>
           </span>
         </template>
       </v-data-table>
@@ -54,12 +54,13 @@
 
 <script setup lang="ts">
 import AppPage from "../components/ui/AppPage.vue";
-import useInterviewsStore from "../stores/interviews-storage";
 import useInterviewsList from "../hooks/interviewsList";
 import { onMounted, computed } from "vue";
 import AppResult from "../components/AppResult.vue";
 import AppPassedStages from "../components/AppPassedStages.vue";
 import AppContacts from "../components/AppContacts.vue";
+import useInterviewsStore from "../stores/interviews-storage";
+import AppConfirm from "../components/AppConfirm.vue";
 
 const interviewsStore = useInterviewsStore();
 const interviewsList = useInterviewsList();
