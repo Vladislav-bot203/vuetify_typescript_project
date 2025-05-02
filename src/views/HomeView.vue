@@ -14,21 +14,21 @@
             autocomplete="off"
             clearable
             variant="outlined"
-            label="Company"
+            label="Company *"
             v-model="company"
           ></v-text-field>
           <v-text-field
             autocomplete="off"
             clearable
             variant="outlined"
-            label="Company description"
+            label="Company description link *"
             v-model="description"
           ></v-text-field>
           <v-text-field
             autocomplete="off"
             clearable
             variant="outlined"
-            label="Contacts name"
+            label="Contacts name *"
             v-model="name"
           ></v-text-field>
           <v-text-field

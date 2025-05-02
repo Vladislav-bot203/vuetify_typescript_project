@@ -4,37 +4,27 @@
       <v-card-title>Interviews</v-card-title>
     </template>
     <template #body>
-      <v-data-table :items="interviews" :headers="headers" item-key="id" class="bg-blue-grey-darken-2">
+      <v-data-table
+        :items="interviews"
+        :headers="headers"
+        item-key="id"
+        class="bg-blue-grey-darken-2"
+      >
         <template #item.vacancyLink="{ item }">
-            <a :href="item.vacancyLink">Go to vacancy description</a>
+          <a :href="item.vacancyLink">Go to vacancy description</a>
         </template>
-    
+
         <template #item.contactTelegram="{ item }">
-          <a
-            v-if="item.contactTelegram"
-            :href="`https://t.me/${item.contactTelegram}`"
-            :title="`Send a message in Telegram: ${item.contactTelegram}`"
-          >
-            <v-icon icon="mdi-send-variant-outline" color="primary"></v-icon>
-          </a>
-          <a
-            v-if="item.contactWhatsApp"
-            :href="`https://wa.me/${item.contactWhatsApp}`"
-            :title="`Send message in WhatsApp: ${item.contactWhatsApp}`"
-          >
-            <v-icon icon="mdi-whatsapp" color="green"></v-icon>
-          </a>
-          <a
-            v-if="item.contactPhone"
-            :href="`https://tel:${item.contactPhone}`"
-            :title="`Make a phone call: ${item.contactPhone}`"
-          >
-            <v-icon icon="mdi-phone-classic" color="amber-darken-1"></v-icon>
-          </a>
+          <app-contacts :interview="item"></app-contacts>
         </template>
 
         <template #item.result="{ item }">
           <app-result :result="item.result ?? 'Unset'"></app-result>
+        </template>
+
+        <template #item.salaryFrom="{ item }">
+          <span v-if="item.salaryFrom">{{ item.salaryFrom }}$</span>
+          <v-chip v-else size="small" draggable variant="flat">Unset</v-chip>
         </template>
 
         <template #item.stages="{ item }">
@@ -42,12 +32,20 @@
         </template>
 
         <template #item.id="{ item }">
-            <span class="d-flex ga-2 justify-center	">
-                <router-link :to="`/interview/${item.id}`" v-slot="{navigate}" custom>
-                  <v-btn icon="mdi-pencil-box" color="deep-orange-lighten-1" @click="navigate"></v-btn>
-                </router-link>
-                <v-btn icon="mdi-delete-outline" color="red-accent-3"></v-btn>
-            </span>
+          <span class="d-flex ga-2 justify-center">
+            <router-link
+              :to="`/interview/${item.id}`"
+              v-slot="{ navigate }"
+              custom
+            >
+              <v-btn
+                icon="mdi-pencil-box"
+                color="deep-orange-lighten-1"
+                @click="navigate"
+              ></v-btn>
+            </router-link>
+            <v-btn icon="mdi-delete-outline" color="red-accent-3"></v-btn>
+          </span>
         </template>
       </v-data-table>
     </template>
@@ -61,6 +59,7 @@ import useInterviewsList from "../hooks/interviewsList";
 import { onMounted, computed } from "vue";
 import AppResult from "../components/AppResult.vue";
 import AppPassedStages from "../components/AppPassedStages.vue";
+import AppContacts from "../components/AppContacts.vue";
 
 const interviewsStore = useInterviewsStore();
 const interviewsList = useInterviewsList();
@@ -74,16 +73,16 @@ onMounted(async () => {
 
 <style scoped>
 a {
-    color: white;
-    text-decoration: none;
+  color: white;
+  text-decoration: none;
 }
 
 a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .v-btn--icon.v-btn--density-default {
-    width: calc(var(--v-btn-height) + 4px);
-    height: calc(var(--v-btn-height) + 4px);
+  width: calc(var(--v-btn-height) + 4px);
+  height: calc(var(--v-btn-height) + 4px);
 }
 </style>
