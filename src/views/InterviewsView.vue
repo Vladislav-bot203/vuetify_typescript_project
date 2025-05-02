@@ -4,11 +4,21 @@
       <v-card-title>Interviews</v-card-title>
     </template>
     <template #body>
+      <v-text-field
+        label="Search"
+        prepend-inner-icon="mdi-magnify"
+        variant="outlined"
+        hide-details
+        single-line
+        clearable
+        v-model="interviewsList.search.value"
+      ></v-text-field>
       <v-data-table
         :items="interviews"
         :headers="headers"
         item-key="id"
         class="bg-blue-grey-darken-2"
+        :search="interviewsList.search.value"
       >
         <template #item.vacancyLink="{ item }">
           <a :href="item.vacancyLink">Go to vacancy description</a>

@@ -21,6 +21,7 @@ export default function useInterviewsList() {
   const interviewsStore = useInterviewsStore();
   const userStore = useUserStore();
   const db = getFirestore();
+  const search = ref<string>('');
   const headers = ref<Array<TableHeader>>([
     {
       title: "Company",
@@ -90,6 +91,7 @@ export default function useInterviewsList() {
   return {
     getAllInteviews,
     headers,
-    deleteInterview
+    deleteInterview,
+    search
   };
 }
