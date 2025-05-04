@@ -11,6 +11,7 @@ import type { Interview } from "../stores/interviews-storage";
 import useInterviewsStore from "../stores/interviews-storage";
 import useUserStore from "../stores/user-storage";
 import { ref } from "vue";
+import useAlertStore from "../stores/alert-storage";
 
 interface TableHeader {
   readonly title: string;
@@ -24,6 +25,8 @@ export default function useInterviewsList() {
   const userStore = useUserStore();
   const db = getFirestore();
   const search = ref<string>('');
+  const alertStore = useAlertStore();
+  const isFetchingData = ref<boolean>(false);
   const headers = ref<Array<TableHeader>>([
     {
       title: "Company",
@@ -75,26 +78,40 @@ export default function useInterviewsList() {
   ]);
 
   async function getAllInteviews(): Promise<void> {
+    isFetchingData.value = true;
     const getData = query(
       collection(db, `users/${userStore.userId}/interviews`),
       orderBy("createdAt", "desc")
     );
-
-    const listDocs = await getDocs(getData);
-    interviewsStore.interviews = listDocs.docs.map(
+    try {
+      const listDocs = await getDocs(getData);
+      interviewsStore.interviews = listDocs.docs.map(
       (doc) => doc.data() as Interview
-    );
+      );
+    } catch (error) {
+      if (error instanceof Error) {
+        alertStore.setAlert('error', "Failed to fetch data", "Error");
+      }
+    }
+    isFetchingData.value = false;
   }
 
   async function deleteInterview(id: string): Promise<void> {
-    await deleteDoc(doc(db, `users/${userStore.userId}/interviews`, id));
-    interviewsStore.removeInterview(id);
+    try {
+      await deleteDoc(doc(db, `users/${userStore.userId}/interviews`, id));
+      interviewsStore.removeInterview(id);
+    } catch (error) {
+      if (error instanceof Error) {
+        alertStore.setAlert('error', "Failed to delete an interview", "Error");
+      }
+    }
   }
 
   return {
     getAllInteviews,
     headers,
     deleteInterview,
-    search
+    search,
+    isFetchingData
   };
 }

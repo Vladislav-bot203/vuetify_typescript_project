@@ -9,7 +9,6 @@ const useAlertStore = defineStore("alert", () => {
   const title = ref<string>("");
   const message = ref<string>("");
   const icon = ref<AlertIcon>();
-  const isVisible = ref<boolean>(false);
 
   function setAlert(
     alertType: AlertType,
@@ -21,7 +20,6 @@ const useAlertStore = defineStore("alert", () => {
     title.value = alertTitle;
     icon.value =
       alertType === "warning" ? "mdi-alert-circle-outline" : "mdi-check-circle";
-    isVisible.value = true;
 
     setTimeout(() => {
       clearAlert();
@@ -33,14 +31,12 @@ const useAlertStore = defineStore("alert", () => {
     message.value = "";
     title.value = "";
     icon.value = undefined;
-    isVisible.value = false;
   }
 
   return {
     type,
     message,
     icon,
-    isVisible,
     title,
     setAlert,
   };

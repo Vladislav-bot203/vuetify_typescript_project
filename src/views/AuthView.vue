@@ -59,21 +59,18 @@
       </v-form>
       <span class="account-creation" @click="changeForm">{{ linkText }}</span>
     </v-card>
-    <app-alert v-if="alertVisibility"></app-alert>
+    <app-alert></app-alert>
   </v-main>
 </template>
 
 <script setup lang="ts">
 import AppAlert from "../components/AppAlert.vue";
 import useAuthStore from "../stores/auth-storage";
-import useAlertStore from "../stores/alert-storage.ts";
 import { computed, ref } from "vue";
 
 const authStore = useAuthStore();
-const alertStore = useAlertStore();
 
 const form = ref();
-const alertVisibility = computed<boolean>(() => alertStore.isVisible);
 const buttonText = computed<string>(() => authStore.buttonText);
 const title = computed<string>(() => authStore.title);
 const linkText = computed<string>(() => authStore.linkText);

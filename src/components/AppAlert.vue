@@ -1,5 +1,6 @@
 <template>
-  <v-alert 
+  <v-alert
+    v-if="alertStore.title" 
     closable 
     :icon="alertStore.icon" 
     :title="alertStore.title" 

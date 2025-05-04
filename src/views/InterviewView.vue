@@ -5,8 +5,17 @@
     </template>
 
     <template #body>
+      <v-container v-if="isFetchingData" class="d-flex justify-center">
+        <v-progress-circular
+          :size="100"
+          color="primary"
+          indeterminate
+          width="15"
+      ></v-progress-circular>
+      </v-container>
       <v-form
         class="bg-blue-grey-darken-2 d-flex flex-column rounded-lg align-center"
+        v-else
       >
         <v-container
           class="rounded-lg bg-blue-grey-darken-1 ma-8"
@@ -96,6 +105,13 @@
           </v-radio-group>
         </v-container>
         <v-btn text="save changes" class="mb-10" color="primary" @click="editInterview.saveChanges"></v-btn>
+        <v-progress-linear
+          color="deep-purple-accent-4"
+          height="6"
+          indeterminate
+          rounded
+          v-if="isSending"
+        ></v-progress-linear>
       </v-form>
     </template>
   </app-page>
@@ -123,7 +139,9 @@ const {
   stages,
   addStage,
   deleteStage,
-  updateStage
+  updateStage,
+  isSending,
+  isFetchingData
 } = editInterview;
 
 onMounted(() => {

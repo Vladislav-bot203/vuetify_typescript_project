@@ -13,12 +13,21 @@
         clearable
         v-model="interviewsList.search.value"
       ></v-text-field>
+      <v-container v-if="interviewsList.isFetchingData.value" class="d-flex justify-center">
+        <v-progress-circular
+          :size="100"
+          color="primary"
+          indeterminate
+          width="15"
+      ></v-progress-circular>
+      </v-container>
       <v-data-table
         :items="interviews"
         :headers="headers"
         item-key="id"
         class="bg-blue-grey-darken-2"
         :search="interviewsList.search.value"
+        v-else
       >
         <template #item.vacancyLink="{ item }">
           <a :href="item.vacancyLink">Go to vacancy description</a>

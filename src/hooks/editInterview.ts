@@ -9,11 +9,15 @@ import { useRoute } from "vue-router";
 import useUserStore from "../stores/user-storage";
 import type { Interview, Stage } from "../stores/interviews-storage";
 import { ref } from "vue";
+import useAlertStore from "../stores/alert-storage";
 
 export default function useEditInterview() {
   const route = useRoute();
   const db = getFirestore();
   const userStore = useUserStore();
+  const alertStore = useAlertStore();
+  const isSending = ref<boolean>(false);
+  const isFetchingData = ref<boolean>(false);
   const docRef = doc(
     db,
     `users/${userStore.userId}/interviews`,
@@ -47,30 +51,45 @@ export default function useEditInterview() {
   }
 
   async function getInterview(): Promise<void> {
-    const docSnap = await getDoc(docRef);
+    isFetchingData.value = true;
+    try {
+      const docSnap = await getDoc(docRef);
 
-    if (docSnap.exists()) {
-      interview.value = docSnap.data() as Interview;
-      company.value = interview.value.company;
-      description.value = interview.value.vacancyLink;
-      name.value = interview.value.hrName;
-      telegram.value = interview.value.contactTelegram ?? "";
-      whatsApp.value = interview.value.contactWhatsApp ?? "";
-      phone.value = interview.value.contactPhone ?? "";
-      salaryFrom.value = interview.value.salaryFrom ?? 0;
-      salaryTo.value = interview.value.salaryTo ?? 0;
-      result.value = interview.value.result ?? result.value;
-      if (interview.value.stages && interview.value.stages.length) {
-        stages.value = interview.value.stages.map((stage: Stage) => ({
-          ...stage,
-          date:
-            stage.date instanceof Timestamp ? stage.date.toDate() : stage.date,
-        }));
+      if (docSnap.exists()) {
+        interview.value = docSnap.data() as Interview;
+        company.value = interview.value.company;
+        description.value = interview.value.vacancyLink;
+        name.value = interview.value.hrName;
+        telegram.value = interview.value.contactTelegram ?? "";
+        whatsApp.value = interview.value.contactWhatsApp ?? "";
+        phone.value = interview.value.contactPhone ?? "";
+        salaryFrom.value = interview.value.salaryFrom ?? 0;
+        salaryTo.value = interview.value.salaryTo ?? 0;
+        result.value = interview.value.result ?? result.value;
+        if (interview.value.stages && interview.value.stages.length) {
+          stages.value = interview.value.stages.map((stage: Stage) => ({
+            ...stage,
+            date:
+              stage.date instanceof Timestamp
+                ? stage.date.toDate()
+                : stage.date,
+          }));
+        }
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        alertStore.setAlert(
+          "error",
+          "Failed to get the interview's info",
+          "Error"
+        );
       }
     }
+    isFetchingData.value = false;
   }
 
   async function saveChanges() {
+    isSending.value = true;
     if (interview.value?.id) {
       const updatedData: Interview = {
         id: interview.value.id,
@@ -87,8 +106,19 @@ export default function useEditInterview() {
         createdAt: interview.value.createdAt,
       };
 
-      await updateDoc(docRef, { ...updatedData });
+      try {
+        await updateDoc(docRef, { ...updatedData });
+      } catch (error) {
+        if (error instanceof Error) {
+          alertStore.setAlert(
+            "error",
+            "Failed to save the interview's changes",
+            "Error"
+          );
+        }
+      }
     }
+    isSending.value = false;
   }
 
   function updateStage(id: number, updatedStage: Stage) {
@@ -113,5 +143,7 @@ export default function useEditInterview() {
     deleteStage,
     updateStage,
     saveChanges,
+    isSending,
+    isFetchingData
   };
 }

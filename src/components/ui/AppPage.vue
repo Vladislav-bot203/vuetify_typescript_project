@@ -6,16 +6,13 @@
         >
             <slot name="title"></slot>
             <slot name="body"></slot>
-            <app-alert v-if="alertStore.isVisible" class="w-75"></app-alert>
+            <app-alert class="w-75"></app-alert>
         </v-card>
     </div>
 </template>
 
 <script lang="ts" setup>
-import useAlertStore from '../../stores/alert-storage';
 import AppAlert from '../AppAlert.vue';
-
-const alertStore = useAlertStore();
 
 </script>
 
