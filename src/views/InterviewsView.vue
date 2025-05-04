@@ -54,7 +54,9 @@
                 @click="navigate"
               ></v-btn>
             </router-link>
-            <app-confirm :id="item.id"></app-confirm>
+            <app-confirm
+              @deleteInterview="interviewsList.deleteInterview(item.id)"
+            ></app-confirm>
           </span>
         </template>
       </v-data-table>

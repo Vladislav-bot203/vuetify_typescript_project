@@ -27,14 +27,13 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import useInterviewsStore from '../stores/interviews-storage';
 
-const interviewStore = useInterviewsStore();
-const props = defineProps(["id"]);
+// const props = defineProps(["id"]);
 const dialog = ref<boolean>(false);
+const emits = defineEmits(['deleteInterview']);
 
 function confirm() {
-    interviewStore.removeInterview(props.id);
+  emits('deleteInterview');
 }
 
 </script>

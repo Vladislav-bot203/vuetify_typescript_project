@@ -1,4 +1,10 @@
-import { getFirestore, doc, getDoc } from "firebase/firestore";
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  updateDoc,
+  Timestamp,
+} from "firebase/firestore";
 import { useRoute } from "vue-router";
 import useUserStore from "../stores/user-storage";
 import type { Interview, Stage } from "../stores/interviews-storage";
@@ -26,7 +32,7 @@ export default function useEditInterview() {
   const salaryTo = ref<number>();
   const result = ref<"Offer" | "Refusal" | "Unset">("Unset");
 
-  const stages = ref<Array<Stage> | []>(interview.value?.stages ?? []);
+  const stages = ref<Array<Stage> | []>([]);
 
   function addStage() {
     stages.value = [
@@ -54,6 +60,34 @@ export default function useEditInterview() {
       salaryFrom.value = interview.value.salaryFrom ?? 0;
       salaryTo.value = interview.value.salaryTo ?? 0;
       result.value = interview.value.result ?? result.value;
+      if (interview.value.stages && interview.value.stages.length) {
+        stages.value = interview.value.stages.map((stage: Stage) => ({
+          ...stage,
+          date:
+            stage.date instanceof Timestamp ? stage.date.toDate() : stage.date,
+        }));
+      }
+    }
+  }
+
+  async function saveChanges() {
+    if (interview.value?.id) {
+      const updatedData: Interview = {
+        id: interview.value.id,
+        company: company.value,
+        vacancyLink: description.value,
+        hrName: name.value,
+        contactTelegram: telegram.value,
+        contactWhatsApp: whatsApp.value,
+        contactPhone: phone.value,
+        salaryFrom: salaryFrom.value,
+        salaryTo: salaryTo.value,
+        stages: stages.value,
+        result: result.value,
+        createdAt: interview.value.createdAt,
+      };
+
+      await updateDoc(docRef, { ...updatedData });
     }
   }
 
@@ -78,5 +112,6 @@ export default function useEditInterview() {
     addStage,
     deleteStage,
     updateStage,
+    saveChanges,
   };
 }

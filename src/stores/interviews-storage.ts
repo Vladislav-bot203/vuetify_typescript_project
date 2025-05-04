@@ -33,7 +33,7 @@ const useInterviewsStore = defineStore("interviews", () => {
 
   return {
     interviews,
-    removeInterview
+    removeInterview,
   };
 });
 

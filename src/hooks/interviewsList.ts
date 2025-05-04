@@ -4,6 +4,8 @@ import {
   orderBy,
   getDocs,
   getFirestore,
+  deleteDoc,
+  doc
 } from "firebase/firestore";
 import type { Interview } from "../stores/interviews-storage";
 import useInterviewsStore from "../stores/interviews-storage";
@@ -85,6 +87,7 @@ export default function useInterviewsList() {
   }
 
   async function deleteInterview(id: string): Promise<void> {
+    await deleteDoc(doc(db, `users/${userStore.userId}/interviews`, id));
     interviewsStore.removeInterview(id);
   }
 

@@ -95,7 +95,7 @@
             <v-radio value="Unset" label="Unset" color="primary"></v-radio>
           </v-radio-group>
         </v-container>
-        <v-btn text="Confirm" class="mb-10" color="primary"></v-btn>
+        <v-btn text="save changes" class="mb-10" color="primary" @click="editInterview.saveChanges"></v-btn>
       </v-form>
     </template>
   </app-page>
@@ -128,6 +128,7 @@ const {
 
 onMounted(() => {
   getInterview()
+  console.log(stages)
 });
 </script>
 
