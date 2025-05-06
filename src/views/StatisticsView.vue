@@ -5,11 +5,20 @@
     </template>
 
     <template #body>
-      <v-container 
+      <v-container v-if="interviewsList.isFetchingData.value" class="d-flex justify-center">
+        <v-progress-circular
+          :size="100"
+          color="primary"
+          indeterminate
+          width="15"
+      ></v-progress-circular>
+      </v-container>
+      <v-container
         class="bg-blue-grey-darken-2 rounded-lg mx-auto my-7"
         style="border: 2px solid #2979ff"
+        v-else
       >
-        <v-chart class="chart" :option="chartOptions" autoresize></v-chart>
+        <v-chart class="chart" :option="chartOptions" autoresize ref="chartRef"></v-chart>
       </v-container>
     </template>
   </app-page>
@@ -19,73 +28,79 @@
 import AppPage from "../components/ui/AppPage.vue";
 import { use } from "echarts/core";
 import { PieChart } from "echarts/charts";
-import {
-  TooltipComponent,
-  LegendComponent,
-} from "echarts/components";
+import { TooltipComponent, LegendComponent } from "echarts/components";
 import { CanvasRenderer } from "echarts/renderers";
 import VChart from "vue-echarts";
+import useInterviewsList from "../hooks/interviewsList";
+import { onMounted, computed, shallowRef } from "vue";
+import useInterviewsStore from "../stores/interviews-storage";
 
-use([
-  TooltipComponent,
-  LegendComponent,
-  PieChart,
-  CanvasRenderer,
-]);
+use([TooltipComponent, LegendComponent, PieChart, CanvasRenderer]);
 
-const chartOptions = {
-  tooltip: {
-    trigger: "item",
-    formatter: "{a} <br/>{b}: {c} ({d}%)",
-    backgroundColor: '#37474F',
-    textStyle: {
-    color: "#EEEEEE",
-  },
-  },
-  legend: {
-    orient: "vertical",
-    bottom: "bottom",
-    data: [
-      "Category 1",
-      "Category 2",
-      "Category 3",
-      "Category 4",
-      "Category 5",
-    ],
-  },
-  series: [
-    {
-      name: "Statistics",
-      type: "pie",
-      radius: ["40%", "70%"],
-      avoidLabelOverlap: false,
-      itemStyle: {
-        borderRadius: 12,
+const interviewsList = useInterviewsList();
+const interviewsStore = useInterviewsStore();
+
+const chartRef = shallowRef(null);
+
+const chartOptions = computed(() => {
+  const stats = interviewsStore.getInterviewsStats();
+
+  const colorMap = {
+    'Offer': '#388E3C',
+    'Refusal': '#D84315',
+    'Unset': '#0D47A1'
+  };
+
+  return {
+    tooltip: {
+      trigger: "item",
+      formatter: "{a} <br/>{b}: {c} ({d}%)",
+      backgroundColor: "#37474F",
+      textStyle: {
+        color: "#EEEEEE",
       },
-      label: {
-        show: false,
-        position: "center",
-      },
-      emphasis: {
-        label: {
-          show: true,
-          fontSize: "18",
-          fontWeight: "bold",
-        },
-      },
-      labelLine: {
-        show: false,
-      },
-      data: [
-        { value: 35, name: "Category 1" },
-        { value: 25, name: "Category 2" },
-        { value: 20, name: "Category 3" },
-        { value: 15, name: "Category 4" },
-        { value: 0, name: "Category 5" },
-      ],
     },
-  ],
-};
+    legend: {
+      orient: "vertical",
+      bottom: "bottom",
+      textStyle: {
+        color: "#EEEEEE",
+      },
+      data: stats.map(item => item.name),
+    },
+    color: stats.map(item => colorMap[item.name as keyof typeof colorMap] || "#0D47A1"),
+    series: [
+      {
+        name: "Statistics",
+        type: "pie",
+        radius: ["40%", "70%"],
+        avoidLabelOverlap: false,
+        itemStyle: {
+          borderRadius: 12,
+        },
+        label: {
+          show: false,
+          position: "center",
+        },
+        emphasis: {
+          label: {
+            show: true,
+            fontSize: "18",
+            fontWeight: "bold",
+          },
+        },
+        labelLine: {
+          show: false,
+        },
+        data: stats,
+      },
+    ],
+  };
+});
+
+onMounted(async () => {
+  interviewsList.getAllInteviews();
+});
 </script>
 
 <style scoped>
