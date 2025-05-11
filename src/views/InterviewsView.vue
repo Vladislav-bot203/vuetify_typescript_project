@@ -42,7 +42,7 @@
         </template>
 
         <template #item.salaryFrom="{ item }">
-          <span v-if="item.salaryFrom">{{ item.salaryFrom }}$</span>
+          <span v-if="item.salaryFrom">$ {{ item.salaryFrom }}</span>
           <v-chip v-else size="small" draggable variant="flat">Unset</v-chip>
         </template>
 
