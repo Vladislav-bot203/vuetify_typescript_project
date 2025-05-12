@@ -40,7 +40,7 @@
 </template>
 
 <script lang="ts" setup>
-import { defineProps, watch, defineEmits } from "vue";
+import { watch, defineEmits } from "vue";
 
 const props = defineProps(["stage"]);
 const emits = defineEmits(["update:stage", "remove"]);

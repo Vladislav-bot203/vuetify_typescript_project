@@ -23,8 +23,8 @@ export interface Interview {
 }
 
 export interface InterviewsStats {
-  value: number,
-  name: string
+  value: number;
+  name: string;
 }
 
 const useInterviewsStore = defineStore("interviews", () => {
@@ -36,25 +36,28 @@ const useInterviewsStore = defineStore("interviews", () => {
     );
   }
 
-  function getInterviewsStats () {
+  function getInterviewsStats() {
     if (!interviews.value) return [];
 
-    const statsMap = interviews.value.reduce((acc: Record<string, number>, interview: Interview) => {
-      const result = interview.result || "Unset";
-      acc[result] = (acc[result] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
+    const statsMap = interviews.value.reduce(
+      (acc: Record<string, number>, interview: Interview) => {
+        const result = interview.result || "Unset";
+        acc[result] = (acc[result] || 0) + 1;
+        return acc;
+      },
+      {} as Record<string, number>
+    );
 
     return Object.entries(statsMap).map(([name, value]) => ({
       name,
-      value
+      value,
     }));
   }
 
   return {
     interviews,
     removeInterview,
-    getInterviewsStats
+    getInterviewsStats,
   };
 });
 

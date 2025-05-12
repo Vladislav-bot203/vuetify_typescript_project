@@ -8,7 +8,7 @@
         <v-form
           class="bg-blue-grey-darken-2 d-flex flex-column ga-2 pa-10 rounded-lg"
           @submit.prevent="sendData"
-          ref="form"
+          ref="formRef"
         >
           <v-text-field
             autocomplete="off"
@@ -56,7 +56,7 @@
             type="submit"
             text="Create"
             color="primary w-50 align-self-center"
-            :disabled="disabledSubmitButton"
+            :disabled="submitButtonActivity"
           ></v-btn>
           <v-progress-linear
             color="deep-purple-accent-4"
@@ -72,7 +72,7 @@
 </template>
 
 <script setup lang="ts">
-import AppPage from "../components/ui/AppPage.vue";
+import AppPage from "../components/AppPage.vue";
 import useCreateInterview from "../hooks/createInterview";
 
 const createInterview = useCreateInterview();
@@ -85,8 +85,8 @@ const {
   whatsapp,
   phonenumber,
   sendData,
-  form,
-  disabledSubmitButton,
-  isLoading
+  formRef,
+  submitButtonActivity,
+  isLoading,
 } = createInterview;
 </script>

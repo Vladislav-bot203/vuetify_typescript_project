@@ -5,6 +5,7 @@ import useUserStore from "../stores/user-storage";
 import { useRouter } from "vue-router";
 import { getFirestore, setDoc, doc } from "firebase/firestore";
 import useAlertStore from "../stores/alert-storage";
+import { signOut, getAuth } from "firebase/auth";
 
 export default function useCreateInterview() {
   const company = ref<string>("");
@@ -13,16 +14,22 @@ export default function useCreateInterview() {
   const telegram = ref<string>("");
   const whatsapp = ref<string>("");
   const phonenumber = ref<string>("");
-  const form = ref();
+  const formRef = ref();
   const isLoading = ref<boolean>(false);
   const userStore = useUserStore();
   const router = useRouter();
   const db = getFirestore();
   const alertStore = useAlertStore();
 
-  const disabledSubmitButton = computed<boolean>(
+  const submitButtonActivity = computed<boolean>(
     () => !(company.value && description.value && name.value)
   );
+
+  async function logout(): Promise<void> {
+    await signOut(getAuth());
+    userStore.userId = "";
+    router.push({ name: "Auth" });
+  }
 
   async function sendData(): Promise<void> {
     isLoading.value = true;
@@ -45,8 +52,16 @@ export default function useCreateInterview() {
           doc(db, `users/${userId}/interviews`, payload.id),
           payload
         ).then(() => {
-          router.push({ name: 'Interviews' });
+          router.push({ name: "Interviews" });
         });
+      } catch (error) {
+        if (error instanceof Error) {
+          alertStore.setAlert("warning", error.message, error.name);
+        }
+      }
+    } else {
+      try {
+        await logout();
       } catch (error) {
         if (error instanceof Error) {
           alertStore.setAlert("warning", error.message, error.name);
@@ -55,7 +70,7 @@ export default function useCreateInterview() {
     }
 
     isLoading.value = false;
-    form.value?.reset();
+    formRef.value?.reset();
   }
 
   return {
@@ -66,8 +81,8 @@ export default function useCreateInterview() {
     whatsapp,
     phonenumber,
     sendData,
-    form,
-    disabledSubmitButton,
+    formRef,
+    submitButtonActivity,
     isLoading,
   };
 }

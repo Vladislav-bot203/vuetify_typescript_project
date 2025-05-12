@@ -5,7 +5,7 @@ import {
   updateDoc,
   Timestamp,
 } from "firebase/firestore";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import useUserStore from "../stores/user-storage";
 import type { Interview, Stage } from "../stores/interviews-storage";
 import { ref } from "vue";
@@ -13,6 +13,7 @@ import useAlertStore from "../stores/alert-storage";
 
 export default function useEditInterview() {
   const route = useRoute();
+  const router = useRouter();
   const db = getFirestore();
   const userStore = useUserStore();
   const alertStore = useAlertStore();
@@ -108,6 +109,7 @@ export default function useEditInterview() {
 
       try {
         await updateDoc(docRef, { ...updatedData });
+        router.push({ name: "Interviews" });
       } catch (error) {
         if (error instanceof Error) {
           alertStore.setAlert(
@@ -144,6 +146,6 @@ export default function useEditInterview() {
     updateStage,
     saveChanges,
     isSending,
-    isFetchingData
+    isFetchingData,
   };
 }

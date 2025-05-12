@@ -1,9 +1,9 @@
 <template>
   <v-alert
-    v-if="alertStore.title" 
-    closable 
-    :icon="alertStore.icon" 
-    :title="alertStore.title" 
+    v-if="alertStore.title"
+    closable
+    :icon="alertStore.icon"
+    :title="alertStore.title"
     :text="alertStore.message"
     :type="alertStore.type"
     width="100%"
@@ -14,8 +14,7 @@
 </template>
 
 <script lang="ts" setup>
-import useAlertStore from '../stores/alert-storage'
+import useAlertStore from "../stores/alert-storage";
 
-const alertStore = useAlertStore()
-
+const alertStore = useAlertStore();
 </script>

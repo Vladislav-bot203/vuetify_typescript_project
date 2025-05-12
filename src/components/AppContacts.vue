@@ -7,7 +7,11 @@
     "
     class="pa-0 d-flex ga-1 justify-center"
   >
-    <v-tooltip location="top" :text="props.interview.contactTelegram" v-if="props.interview.contactTelegram">
+    <v-tooltip
+      location="top"
+      :text="props.interview.contactTelegram"
+      v-if="props.interview.contactTelegram"
+    >
       <template #activator="{ props: activatorProps }">
         <a
           :href="`https://t.me/${props.interview.contactTelegram}`"
@@ -18,7 +22,11 @@
       </template>
     </v-tooltip>
 
-    <v-tooltip location="top" :text="props.interview.contactWhatsApp" v-if="props.interview.contactWhatsApp">
+    <v-tooltip
+      location="top"
+      :text="props.interview.contactWhatsApp"
+      v-if="props.interview.contactWhatsApp"
+    >
       <template #activator="{ props: activatorProps }">
         <a
           :href="`https://wa.me/${props.interview.contactWhatsApp}`"
@@ -29,7 +37,11 @@
       </template>
     </v-tooltip>
 
-    <v-tooltip location="top" :text="props.interview.contactPhone" v-if="props.interview.contactPhone">
+    <v-tooltip
+      location="top"
+      :text="props.interview.contactPhone"
+      v-if="props.interview.contactPhone"
+    >
       <template #activator="{ props: activatorProps }">
         <a
           :href="`https://tel:${props.interview.contactPhone}`"

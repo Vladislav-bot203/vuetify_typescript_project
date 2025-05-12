@@ -26,16 +26,14 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref } from "vue";
 
-// const props = defineProps(["id"]);
 const dialog = ref<boolean>(false);
-const emits = defineEmits(['deleteInterview']);
+const emits = defineEmits(["deleteInterview"]);
 
 function confirm() {
-  emits('deleteInterview');
+  emits("deleteInterview");
 }
-
 </script>
 
 <style scoped>

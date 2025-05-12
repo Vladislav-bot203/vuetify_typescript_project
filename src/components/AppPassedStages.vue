@@ -17,14 +17,14 @@
 
     <v-tooltip v-else text="No stages added" location="top">
       <template v-slot:activator="{ props: activatorProps }">
-        <v-avatar v-bind="activatorProps" color="yellow-darken-4" size="20">0</v-avatar>
+        <v-avatar v-bind="activatorProps" color="yellow-darken-4" size="20"
+          >0</v-avatar
+        >
       </template>
     </v-tooltip>
   </v-container>
 </template>
 
 <script setup lang="ts">
-import { defineProps } from "vue";
-
 const props = defineProps(["stages"]);
 </script>

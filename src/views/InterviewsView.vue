@@ -13,13 +13,16 @@
         clearable
         v-model="interviewsList.search.value"
       ></v-text-field>
-      <v-container v-if="interviewsList.isFetchingData.value" class="d-flex justify-center">
+      <v-container
+        v-if="interviewsList.isFetchingData.value"
+        class="d-flex justify-center"
+      >
         <v-progress-circular
           :size="100"
           color="primary"
           indeterminate
           width="15"
-      ></v-progress-circular>
+        ></v-progress-circular>
       </v-container>
       <v-data-table
         :items="interviews"
@@ -74,7 +77,7 @@
 </template>
 
 <script setup lang="ts">
-import AppPage from "../components/ui/AppPage.vue";
+import AppPage from "../components/AppPage.vue";
 import useInterviewsList from "../hooks/interviewsList";
 import { onMounted, computed } from "vue";
 import AppResult from "../components/AppResult.vue";

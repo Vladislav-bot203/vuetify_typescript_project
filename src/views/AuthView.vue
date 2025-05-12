@@ -8,39 +8,43 @@
       <v-form
         @submit.prevent="submitForm"
         class="d-flex justify-center flex-column ga-5"
-        ref="form"
+        ref="formRef"
       >
         <v-text-field
           variant="outlined"
           label="User Name"
           width="300"
-          :rules="registration ? [rules.email] : []"
+          :rules="formMode ? [rules.email] : []"
           clearable
           autocomplete="username"
-          v-model="userName"
+          v-model="mail"
         ></v-text-field>
         <v-text-field
           variant="outlined"
           placeholder="Enter your password"
           label="Password"
-          :type="showFirst ? 'text' : 'password'"
+          :type="passwordInputIcon ? 'text' : 'password'"
           width="300"
-          :rules="authStore.registration ? [rules.counter, rules.minLen] : []"
-          :append-inner-icon="showFirst ? 'mdi-eye' : 'mdi-eye-off'"
-          @click:append-inner="showFirst = !showFirst"
+          :rules="formMode ? [rules.counter, rules.minLen] : []"
+          :append-inner-icon="passwordInputIcon ? 'mdi-eye' : 'mdi-eye-off'"
+          @click:append-inner="passwordInputIcon = !passwordInputIcon"
           autocomplete="username"
           v-model.trim="password"
         >
         </v-text-field>
         <v-text-field
-          v-if="registration"
+          v-if="formMode"
           variant="outlined"
           placeholder="Confirm Your Password"
           label="Confirm Your Password"
-          :type="showSecond ? 'text' : 'password'"
+          :type="showPasswordConfirmationField ? 'text' : 'password'"
           width="300"
-          :append-inner-icon="showSecond ? 'mdi-eye' : 'mdi-eye-off'"
-          @click:append-inner="showSecond = !showSecond"
+          :append-inner-icon="
+            showPasswordConfirmationField ? 'mdi-eye' : 'mdi-eye-off'
+          "
+          @click:append-inner="
+            showPasswordConfirmationField = !showPasswordConfirmationField
+          "
           autocomplete="username"
           v-model="passwordConfirm"
           :rules="[rules.counter, rules.passwordConfirm, rules.minLen]"
@@ -57,7 +61,9 @@
           v-if="isLoading"
         ></v-progress-linear>
       </v-form>
-      <span class="account-creation" @click="changeForm">{{ linkText }}</span>
+      <span class="form-switcher" @click="switchFormMode">{{
+        formButtonText
+      }}</span>
     </v-card>
     <app-alert></app-alert>
   </v-main>
@@ -70,16 +76,16 @@ import useAuth from "../hooks/authorisation";
 const authStore = useAuth();
 
 const {
-  form,
-  changeForm,
+  formRef,
+  switchFormMode,
   isLoading,
-  linkText,
+  formButtonText,
   title,
   buttonText,
-  showFirst,
-  showSecond,
-  userName,
-  registration,
+  passwordInputIcon,
+  showPasswordConfirmationField,
+  mail,
+  formMode,
   password,
   passwordConfirm,
   submitForm,
@@ -103,7 +109,7 @@ const rules = {
 </script>
 
 <style scoped>
-.account-creation:hover {
+.form-switcher:hover {
   text-decoration: underline;
   cursor: pointer;
 }

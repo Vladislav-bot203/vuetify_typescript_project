@@ -5,7 +5,7 @@ import {
   getDocs,
   getFirestore,
   deleteDoc,
-  doc
+  doc,
 } from "firebase/firestore";
 import type { Interview } from "../stores/interviews-storage";
 import useInterviewsStore from "../stores/interviews-storage";
@@ -24,7 +24,7 @@ export default function useInterviewsList() {
   const interviewsStore = useInterviewsStore();
   const userStore = useUserStore();
   const db = getFirestore();
-  const search = ref<string>('');
+  const search = ref<string>("");
   const alertStore = useAlertStore();
   const isFetchingData = ref<boolean>(false);
   const headers = ref<Array<TableHeader>>([
@@ -86,11 +86,11 @@ export default function useInterviewsList() {
     try {
       const listDocs = await getDocs(getData);
       interviewsStore.interviews = listDocs.docs.map(
-      (doc) => doc.data() as Interview
+        (doc) => doc.data() as Interview
       );
     } catch (error) {
       if (error instanceof Error) {
-        alertStore.setAlert('error', "Failed to fetch data", "Error");
+        alertStore.setAlert("error", "Failed to fetch data", "Error");
       }
     }
     isFetchingData.value = false;
@@ -102,7 +102,7 @@ export default function useInterviewsList() {
       interviewsStore.removeInterview(id);
     } catch (error) {
       if (error instanceof Error) {
-        alertStore.setAlert('error', "Failed to delete an interview", "Error");
+        alertStore.setAlert("error", "Failed to delete an interview", "Error");
       }
     }
   }
@@ -112,6 +112,6 @@ export default function useInterviewsList() {
     headers,
     deleteInterview,
     search,
-    isFetchingData
+    isFetchingData,
   };
 }

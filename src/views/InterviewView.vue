@@ -11,7 +11,7 @@
           color="primary"
           indeterminate
           width="15"
-      ></v-progress-circular>
+        ></v-progress-circular>
       </v-container>
       <v-form
         class="bg-blue-grey-darken-2 d-flex flex-column rounded-lg align-center"
@@ -85,10 +85,10 @@
           ></v-btn>
         </v-container>
         <v-container class="pa-0" v-if="stages.length">
-          <app-stage 
-            v-for="(stage, id) in stages" 
-            :key="id" 
-            :stage="stage" 
+          <app-stage
+            v-for="(stage, id) in stages"
+            :key="id"
+            :stage="stage"
             @remove="deleteStage(id)"
             @update:stage="updateStage(id, $event)"
           ></app-stage>
@@ -104,7 +104,12 @@
             <v-radio value="Unset" label="Unset" color="primary"></v-radio>
           </v-radio-group>
         </v-container>
-        <v-btn text="save changes" class="mb-10" color="primary" @click="editInterview.saveChanges"></v-btn>
+        <v-btn
+          text="save changes"
+          class="mb-10"
+          color="primary"
+          @click="editInterview.saveChanges"
+        ></v-btn>
         <v-progress-linear
           color="deep-purple-accent-4"
           height="6"
@@ -119,11 +124,11 @@
 
 <script lang="ts" setup>
 import { onMounted } from "vue";
-import AppPage from "../components/ui/AppPage.vue";
+import AppPage from "../components/AppPage.vue";
 import useEditInterview from "../hooks/editInterview";
 import AppStage from "../components/AppStage.vue";
 
-const editInterview= useEditInterview();
+const editInterview = useEditInterview();
 
 const {
   getInterview,
@@ -141,12 +146,11 @@ const {
   deleteStage,
   updateStage,
   isSending,
-  isFetchingData
+  isFetchingData,
 } = editInterview;
 
-onMounted(() => {
-  getInterview()
-  console.log(stages)
+onMounted(async () => {
+  await getInterview();
 });
 </script>
 

@@ -5,27 +5,35 @@
     </template>
 
     <template #body>
-      <v-container v-if="interviewsList.isFetchingData.value" class="d-flex justify-center">
+      <v-container
+        v-if="interviewsList.isFetchingData.value"
+        class="d-flex justify-center"
+      >
         <v-progress-circular
           :size="100"
           color="primary"
           indeterminate
           width="15"
-      ></v-progress-circular>
+        ></v-progress-circular>
       </v-container>
       <v-container
         class="bg-blue-grey-darken-2 rounded-lg mx-auto my-7"
         style="border: 2px solid #2979ff"
         v-else
       >
-        <v-chart class="chart" :option="chartOptions" autoresize ref="chartRef"></v-chart>
+        <v-chart
+          class="chart"
+          :option="chartOptions"
+          autoresize
+          ref="chartRef"
+        ></v-chart>
       </v-container>
     </template>
   </app-page>
 </template>
 
 <script setup lang="ts">
-import AppPage from "../components/ui/AppPage.vue";
+import AppPage from "../components/AppPage.vue";
 import { use } from "echarts/core";
 import { PieChart } from "echarts/charts";
 import { TooltipComponent, LegendComponent } from "echarts/components";
@@ -46,9 +54,9 @@ const chartOptions = computed(() => {
   const stats = interviewsStore.getInterviewsStats();
 
   const colorMap = {
-    'Offer': '#388E3C',
-    'Refusal': '#D84315',
-    'Unset': '#0D47A1'
+    Offer: "#388E3C",
+    Refusal: "#D84315",
+    Unset: "#0D47A1",
   };
 
   return {
@@ -66,9 +74,11 @@ const chartOptions = computed(() => {
       textStyle: {
         color: "#EEEEEE",
       },
-      data: stats.map(item => item.name),
+      data: stats.map((item) => item.name),
     },
-    color: stats.map(item => colorMap[item.name as keyof typeof colorMap] || "#0D47A1"),
+    color: stats.map(
+      (item) => colorMap[item.name as keyof typeof colorMap] || "#0D47A1"
+    ),
     series: [
       {
         name: "Statistics",
@@ -99,7 +109,7 @@ const chartOptions = computed(() => {
 });
 
 onMounted(async () => {
-  interviewsList.getAllInteviews();
+  await interviewsList.getAllInteviews();
 });
 </script>
 

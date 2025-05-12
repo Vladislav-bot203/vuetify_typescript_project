@@ -20,11 +20,7 @@
 
     <v-list density="compact" nav v-model:selected="selectedItem">
       <router-link to="/">
-        <v-list-item
-          prepend-icon="mdi-plus-box"
-          title="Add new"
-          value="/"
-        >
+        <v-list-item prepend-icon="mdi-plus-box" title="Add new" value="/">
         </v-list-item>
       </router-link>
       <router-link to="/interviews">
