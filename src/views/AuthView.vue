@@ -1,48 +1,48 @@
 <template>
   <v-main class="ma-auto">
     <v-card
-      class="mb-7 mt-10 bg-blue-grey-darken-3 rounded-lg ma-auto d-flex flex-column justify-center align-center pa-16 ga-2"
+      class="mb-7 mt-10 bg-blue-grey-darken-3 rounded-lg mx-auto d-flex flex-column justify-center align-center pa-16 ga-2"
       :title="title"
       width="400"
     >
       <v-form
-        @submit.prevent="authStore.submitForm"
+        @submit.prevent="submitForm"
         class="d-flex justify-center flex-column ga-5"
         ref="form"
       >
         <v-text-field
           variant="outlined"
-          label="User name"
+          label="User Name"
           width="300"
-          :rules="authStore.registration ? [rules.email] : []"
+          :rules="registration ? [rules.email] : []"
           clearable
           autocomplete="username"
-          v-model="authStore.userName"
+          v-model="userName"
         ></v-text-field>
         <v-text-field
           variant="outlined"
           placeholder="Enter your password"
           label="Password"
-          :type="authStore.showFirst ? 'text' : 'password'"
+          :type="showFirst ? 'text' : 'password'"
           width="300"
           :rules="authStore.registration ? [rules.counter, rules.minLen] : []"
-          :append-inner-icon="authStore.showFirst ? 'mdi-eye' : 'mdi-eye-off'"
-          @click:append-inner="authStore.showFirst = !authStore.showFirst"
+          :append-inner-icon="showFirst ? 'mdi-eye' : 'mdi-eye-off'"
+          @click:append-inner="showFirst = !showFirst"
           autocomplete="username"
-          v-model.trim="authStore.password"
+          v-model.trim="password"
         >
         </v-text-field>
         <v-text-field
-          v-if="authStore.registration"
+          v-if="registration"
           variant="outlined"
-          placeholder="Confirm your password"
-          label="Confirm your password"
-          :type="authStore.showSecond ? 'text' : 'password'"
+          placeholder="Confirm Your Password"
+          label="Confirm Your Password"
+          :type="showSecond ? 'text' : 'password'"
           width="300"
-          :append-inner-icon="authStore.showSecond ? 'mdi-eye' : 'mdi-eye-off'"
-          @click:append-inner="authStore.showSecond = !authStore.showSecond"
+          :append-inner-icon="showSecond ? 'mdi-eye' : 'mdi-eye-off'"
+          @click:append-inner="showSecond = !showSecond"
           autocomplete="username"
-          v-model="authStore.passwordConfirm"
+          v-model="passwordConfirm"
           :rules="[rules.counter, rules.passwordConfirm, rules.minLen]"
         >
         </v-text-field>
@@ -54,7 +54,7 @@
           height="6"
           indeterminate
           rounded
-          v-if="loading"
+          v-if="isLoading"
         ></v-progress-linear>
       </v-form>
       <span class="account-creation" @click="changeForm">{{ linkText }}</span>
@@ -65,28 +65,33 @@
 
 <script setup lang="ts">
 import AppAlert from "../components/AppAlert.vue";
-import useAuthStore from "../stores/auth-storage";
-import { computed, ref } from "vue";
+import useAuth from "../hooks/authorisation";
 
-const authStore = useAuthStore();
+const authStore = useAuth();
 
-const form = ref();
-const buttonText = computed<string>(() => authStore.buttonText);
-const title = computed<string>(() => authStore.title);
-const linkText = computed<string>(() => authStore.linkText);
-const loading = computed<boolean>(() => authStore.isLoading);
-
-function changeForm(): void {
-  authStore.changeForm(form);
-}
+const {
+  form,
+  changeForm,
+  isLoading,
+  linkText,
+  title,
+  buttonText,
+  showFirst,
+  showSecond,
+  userName,
+  registration,
+  password,
+  passwordConfirm,
+  submitForm,
+} = authStore;
 
 const rules = {
   counter: (value: string) =>
     !value || value.length <= 20 || "Max 20 characters",
   minLen: (value: string) => !value || value.length >= 8 || "Min 8 characters",
   passwordConfirm: () =>
-    !authStore.passwordConfirm ||
-    authStore.password === authStore.passwordConfirm ||
+    !passwordConfirm ||
+    password === passwordConfirm ||
     "The password doesn't match the original",
   email: (value: string) => {
     if (!value) return true;
