@@ -102,4 +102,13 @@ const rules = {
   text-decoration: underline;
   cursor: pointer;
 }
+
+:deep(.v-text-field input:-webkit-autofill),
+:deep(.v-text-field input:-webkit-autofill:hover),
+:deep(.v-text-field input:-webkit-autofill:focus),
+:deep(.v-text-field input:-webkit-autofill:active) {
+  -webkit-box-shadow: 0 0 0 1000px #37474f inset !important;
+  -webkit-text-fill-color: white !important;
+  caret-color: white !important;
+}
 </style>
