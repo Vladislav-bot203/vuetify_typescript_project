@@ -95,9 +95,9 @@ const rules = {
   counter: (value: string) =>
     !value || value.length <= 20 || "Max 20 characters",
   minLen: (value: string) => !value || value.length >= 8 || "Min 8 characters",
-  passwordConfirm: () =>
-    !passwordConfirm ||
-    password === passwordConfirm ||
+  passwordConfirm: (value: string) =>
+    !value ||
+    password.value === value ||
     "The password doesn't match the original",
   email: (value: string) => {
     if (!value) return true;
