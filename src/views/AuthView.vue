@@ -1,9 +1,8 @@
 <template>
-  <v-main class="ma-auto">
+  <v-main class="ma-auto card-wrapper">
     <v-card
       class="mb-7 mt-10 bg-blue-grey-darken-3 rounded-lg mx-auto d-flex flex-column justify-center align-center pa-16 ga-2"
       :title="title"
-      width="400"
     >
       <v-form
         @submit.prevent="submitForm"
@@ -109,6 +108,10 @@ const rules = {
 </script>
 
 <style scoped>
+.card-wrapper {
+   width: 400px;
+}
+
 .form-switcher:hover {
   text-decoration: underline;
   cursor: pointer;

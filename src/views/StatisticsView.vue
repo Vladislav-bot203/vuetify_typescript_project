@@ -17,8 +17,7 @@
         ></v-progress-circular>
       </v-container>
       <v-container
-        class="bg-blue-grey-darken-2 rounded-lg mx-auto my-7"
-        style="border: 2px solid #2979ff"
+        class="bg-blue-grey-darken-2 rounded-lg mx-auto my-7 custom-border"
         v-else
       >
         <v-chart
@@ -114,6 +113,10 @@ onMounted(async () => {
 </script>
 
 <style scoped>
+.custom-border {
+   border: 2px solid #2979ff !important;
+}
+
 .chart {
   height: 600px;
   width: 100%;

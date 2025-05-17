@@ -55,7 +55,7 @@
           <v-btn
             type="submit"
             text="Create"
-            color="primary w-50 align-self-center"
+            class="bg-primary w-50 align-self-center"
             :disabled="submitButtonActivity"
           ></v-btn>
           <v-progress-linear

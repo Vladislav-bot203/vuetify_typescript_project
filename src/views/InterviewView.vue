@@ -18,9 +18,8 @@
         v-else
       >
         <v-container
-          class="rounded-lg bg-blue-grey-darken-1 ma-8"
+          class="rounded-lg bg-blue-grey-darken-1 ma-8 custom-border"
           min-width="350"
-          style="border: 2px solid #2979ff"
         >
           <v-text-field
             autocomplete="off"
@@ -94,9 +93,8 @@
           ></app-stage>
         </v-container>
         <v-container
-          class="pa-3 bg-blue-grey-darken-1 d-flex justify-center align-center rounded-lg mb-6"
+          class="pa-3 bg-blue-grey-darken-1 d-flex justify-center align-center rounded-lg mb-6 custom-border"
           min-width="350"
-          style="border: 2px solid #2979ff"
         >
           <v-radio-group inline class="d-flex justify-center" v-model="result">
             <v-radio value="Offer" label="Offer" color="success"></v-radio>
@@ -154,4 +152,8 @@ onMounted(async () => {
 });
 </script>
 
-<style scoped></style>
+<style>
+.custom-border {
+  border: 2px solid #2979ff !important;
+}
+</style>

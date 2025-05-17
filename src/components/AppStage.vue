@@ -1,8 +1,7 @@
 <template>
   <v-container
-    class="pa-3 bg-blue-grey-darken-1 d-flex flex-column align-center mb-5 rounded-lg"
+    class="pa-3 bg-blue-grey-darken-1 d-flex flex-column align-center mb-5 rounded-lg custom-border"
     min-width="350"
-    style="border: 2px solid #2979ff"
   >
     <v-text-field
       autocomplete="off"

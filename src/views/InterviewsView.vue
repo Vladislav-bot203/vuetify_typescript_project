@@ -33,7 +33,7 @@
         v-else
       >
         <template #item.vacancyLink="{ item }">
-          <a :href="item.vacancyLink">Go to vacancy description</a>
+          <a :href="item.vacancyLink" class="vacancy-description__link">Go to vacancy description</a>
         </template>
 
         <template #item.contactTelegram="{ item }">
@@ -97,12 +97,12 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-a {
+.vacancy-description__link {
   color: white;
   text-decoration: none;
 }
 
-a:hover {
+.vacancy-description__link:hover {
   text-decoration: underline;
 }
 
