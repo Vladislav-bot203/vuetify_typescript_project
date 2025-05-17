@@ -1,7 +1,7 @@
 <template>
   <app-page>
     <template #title>
-      <v-card-title>Create new interview</v-card-title>
+      <v-card-title>{{ t("page.title", 0) }}</v-card-title>
     </template>
     <template #body>
       <v-card-item>
@@ -14,47 +14,47 @@
             autocomplete="off"
             clearable
             variant="outlined"
-            label="Company *"
+            :label="t('home.companyInput')"
             v-model="company"
           ></v-text-field>
           <v-text-field
             autocomplete="off"
             clearable
             variant="outlined"
-            label="Company description link *"
+            :label="t('home.descriptionLinkInput')"
             v-model="description"
           ></v-text-field>
           <v-text-field
             autocomplete="off"
             clearable
             variant="outlined"
-            label="Contacts name *"
+            :label="t('home.contactsNameInput')"
             v-model="name"
           ></v-text-field>
           <v-text-field
             autocomplete="off"
             clearable
             variant="outlined"
-            label="Telegram username of HR"
+            :label="t('home.telegramInput')"
             v-model="telegram"
           ></v-text-field>
           <v-text-field
             autocomplete="off"
             clearable
             variant="outlined"
-            label="WhatsApp username of HR"
+            :label="t('home.whatsAppInput')"
             v-model="whatsapp"
           ></v-text-field>
           <v-text-field
             autocomplete="off"
             clearable
             variant="outlined"
-            label="Phonenumber of HR"
+            :label="t('home.phoneInput')"
             v-model="phonenumber"
           ></v-text-field>
           <v-btn
             type="submit"
-            text="Create"
+            :text="t('home.buttonText')"
             class="bg-primary w-50 align-self-center"
             :disabled="submitButtonActivity"
           ></v-btn>
@@ -74,6 +74,9 @@
 <script setup lang="ts">
 import AppPage from "../components/AppPage.vue";
 import useCreateInterview from "../hooks/createInterview";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 const createInterview = useCreateInterview();
 

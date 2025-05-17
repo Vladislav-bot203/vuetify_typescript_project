@@ -12,6 +12,7 @@ import useUserStore from "../stores/user-storage";
 type FormValue = "LogIn" | "Create an account";
 
 export default function useAuth() {
+
   const formRef = ref();
   const title = ref<FormValue>("LogIn");
   const formButtonText = ref<FormValue>("Create an account");

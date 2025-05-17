@@ -12,6 +12,7 @@ import useInterviewsStore from "../stores/interviews-storage";
 import useUserStore from "../stores/user-storage";
 import { ref } from "vue";
 import useAlertStore from "../stores/alert-storage";
+import { useI18n } from "vue-i18n";
 
 interface TableHeader {
   readonly title: string;
@@ -27,50 +28,51 @@ export default function useInterviewsList() {
   const search = ref<string>("");
   const alertStore = useAlertStore();
   const isFetchingData = ref<boolean>(false);
+  const { t } = useI18n();
   const headers = ref<Array<TableHeader>>([
     {
-      title: "Company",
+      title: t("interviews.tableHeaders[0]"),
       key: "company",
       sortable: true,
     },
     {
-      title: "HR Name",
+      title: t("interviews.tableHeaders[1]"),
       key: "hrName",
       sortable: false,
       align: "center",
     },
     {
-      title: "Vacancy",
+      title: t("interviews.tableHeaders[2]"),
       key: "vacancyLink",
       sortable: false,
       align: "center",
     },
     {
-      title: "Contacts",
+      title: t("interviews.tableHeaders[3]"),
       key: "contactTelegram",
       sortable: false,
       align: "center",
     },
     {
-      title: "Passed stages",
+      title: t("interviews.tableHeaders[4]"),
       key: "stages",
       sortable: false,
       align: "center",
     },
     {
-      title: "Salary",
+      title: t("interviews.tableHeaders[5]"),
       key: "salaryFrom",
       sortable: false,
       align: "center",
     },
     {
-      title: "Result",
+      title: t("interviews.tableHeaders[6]"),
       key: "result",
       sortable: false,
       align: "center",
     },
     {
-      title: "Actions",
+      title: t("interviews.tableHeaders[7]"),
       key: "id",
       sortable: false,
       align: "center",

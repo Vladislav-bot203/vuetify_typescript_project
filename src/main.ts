@@ -4,6 +4,7 @@ import App from "./App.vue";
 import router from "./router/router";
 import { createPinia } from "pinia";
 import { initializeApp } from "firebase/app";
+import i18n from "./locales/index";
 
 import "vuetify/styles";
 import { createVuetify } from "vuetify";
@@ -36,4 +37,4 @@ const firebaseConfig = {
 
 initializeApp(firebaseConfig);
 
-createApp(App).use(vuetify).use(pinia).use(router).mount("#app");
+createApp(App).use(vuetify).use(pinia).use(router).use(i18n).mount("#app");

@@ -2,7 +2,7 @@
   <v-main class="ma-auto card-wrapper">
     <v-card
       class="mb-7 mt-10 bg-blue-grey-darken-3 rounded-lg mx-auto d-flex flex-column justify-center align-center pa-16 ga-2"
-      :title="title"
+      :title="t('auth.title', formMode ? 0 : 1)"
     >
       <v-form
         @submit.prevent="submitForm"
@@ -11,17 +11,18 @@
       >
         <v-text-field
           variant="outlined"
-          label="User Name"
+          :label="t('auth.eMailInputLabel')"
           width="300"
           :rules="formMode ? [rules.email] : []"
           clearable
           autocomplete="username"
           v-model="mail"
+          :placeholder="t('auth.eMailInputPlaceholder')"
         ></v-text-field>
         <v-text-field
           variant="outlined"
-          placeholder="Enter your password"
-          label="Password"
+          :placeholder="t('auth.passwordInputPlaceholder')"
+          :label="t('auth.passwordInputLabel')"
           :type="passwordInputIcon ? 'text' : 'password'"
           width="300"
           :rules="formMode ? [rules.counter, rules.minLen] : []"
@@ -34,8 +35,8 @@
         <v-text-field
           v-if="formMode"
           variant="outlined"
-          placeholder="Confirm Your Password"
-          label="Confirm Your Password"
+          :placeholder="t('auth.passwordConfirmInputPlaceholder')"
+          :label="t('auth.passwordConfirmInputLabel')"
           :type="showPasswordConfirmationField ? 'text' : 'password'"
           width="300"
           :append-inner-icon="
@@ -50,7 +51,7 @@
         >
         </v-text-field>
         <v-btn type="submit" append-icon="mdi-login" color="green">{{
-          buttonText
+          t("auth.buttonText", formMode ? 0 : 1)
         }}</v-btn>
         <v-progress-linear
           color="deep-purple-accent-4"
@@ -61,7 +62,7 @@
         ></v-progress-linear>
       </v-form>
       <span class="form-switcher" @click="switchFormMode">{{
-        formButtonText
+        t("auth.title", formMode ? 1 : 0)
       }}</span>
     </v-card>
     <app-alert></app-alert>
@@ -71,6 +72,9 @@
 <script setup lang="ts">
 import AppAlert from "../components/AppAlert.vue";
 import useAuth from "../hooks/authorisation";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 const authStore = useAuth();
 
@@ -109,7 +113,7 @@ const rules = {
 
 <style scoped>
 .card-wrapper {
-   width: 400px;
+  width: 400px;
 }
 
 .form-switcher:hover {

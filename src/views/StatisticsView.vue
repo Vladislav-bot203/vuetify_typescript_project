@@ -1,7 +1,7 @@
 <template>
   <app-page>
     <template #title>
-      <v-card-title> Statistics </v-card-title>
+      <v-card-title>{{ t("page.title", 2) }}</v-card-title>
     </template>
 
     <template #body>
@@ -32,6 +32,7 @@
 </template>
 
 <script setup lang="ts">
+import { useI18n } from "vue-i18n";
 import AppPage from "../components/AppPage.vue";
 import { use } from "echarts/core";
 import { PieChart } from "echarts/charts";
@@ -44,6 +45,8 @@ import useInterviewsStore from "../stores/interviews-storage";
 import { type InterviewsStats } from "../stores/interviews-storage"
 
 use([TooltipComponent, LegendComponent, PieChart, CanvasRenderer]);
+
+const { t } = useI18n();
 
 const interviewsList = useInterviewsList();
 const interviewsStore = useInterviewsStore();

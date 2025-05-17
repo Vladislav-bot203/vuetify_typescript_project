@@ -33,7 +33,7 @@
         v-else
       >
         <template #item.vacancyLink="{ item }">
-          <a :href="item.vacancyLink" class="vacancy-description__link">Go to vacancy description</a>
+          <a :href="item.vacancyLink" class="vacancy-description__link">{{ t("interviews.descriptionLink") }}</a>
         </template>
 
         <template #item.contactTelegram="{ item }">
@@ -85,7 +85,9 @@ import AppPassedStages from "../components/AppPassedStages.vue";
 import AppContacts from "../components/AppContacts.vue";
 import useInterviewsStore from "../stores/interviews-storage";
 import AppConfirm from "../components/AppConfirm.vue";
+import { useI18n } from "vue-i18n"
 
+const { t } = useI18n();
 const interviewsStore = useInterviewsStore();
 const interviewsList = useInterviewsList();
 const interviews = computed(() => interviewsStore.interviews);
