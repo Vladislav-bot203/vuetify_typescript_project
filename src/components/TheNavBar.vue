@@ -20,11 +20,11 @@
     <v-divider></v-divider>
 
     <v-list density="compact" nav v-model:selected="selectedItem">
-      <router-link to="/">
+      <router-link to="/" class="router-link__custom">
         <v-list-item prepend-icon="mdi-plus-box" title="Add new" value="/">
         </v-list-item>
       </router-link>
-      <router-link to="/interviews">
+      <router-link to="/interviews" class="router-link__custom">
         <v-list-item
           prepend-icon="mdi-table"
           title="Interviews"
@@ -32,7 +32,7 @@
         >
         </v-list-item>
       </router-link>
-      <router-link to="/statistics">
+      <router-link to="/statistics" class="router-link__custom">
         <v-list-item
           prepend-icon="mdi-panorama-sphere-outline"
           title="Statistics"
@@ -86,7 +86,7 @@ async function logout(): Promise<void> {
 </script>
 
 <style scoped>
-a {
+.router-link__custom {
   color: white;
   text-decoration: none;
 }

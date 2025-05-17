@@ -17,9 +17,9 @@
       <template v-slot:actions>
         <v-spacer></v-spacer>
 
-        <v-btn @click="dialog = false" class="bg-error"> Disagree </v-btn>
+        <v-btn @click="dialog = false" class="bg-error">cancel</v-btn>
 
-        <v-btn @click="confirm" class="bg-primary"> Agree </v-btn>
+        <v-btn @click="remove" class="bg-primary">delete</v-btn>
       </template>
     </v-card>
   </v-dialog>
@@ -31,7 +31,7 @@ import { ref } from "vue";
 const dialog = ref<boolean>(false);
 const emits = defineEmits(["deleteInterview"]);
 
-function confirm() {
+function remove() {
   emits("deleteInterview");
 }
 </script>
