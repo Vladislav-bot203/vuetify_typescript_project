@@ -41,6 +41,7 @@ import VChart from "vue-echarts";
 import useInterviewsList from "../hooks/interviewsList";
 import { onMounted, computed, shallowRef } from "vue";
 import useInterviewsStore from "../stores/interviews-storage";
+import { type InterviewsStats } from "../stores/interviews-storage"
 
 use([TooltipComponent, LegendComponent, PieChart, CanvasRenderer]);
 
@@ -50,7 +51,7 @@ const interviewsStore = useInterviewsStore();
 const chartRef = shallowRef(null);
 
 const chartOptions = computed(() => {
-  const stats = interviewsStore.getInterviewsStats();
+  const stats: Array<InterviewsStats> = interviewsStore.getInterviewsStats();
 
   const colorMap = {
     Offer: "#388E3C",

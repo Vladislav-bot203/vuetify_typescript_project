@@ -36,7 +36,7 @@ const useInterviewsStore = defineStore("interviews", () => {
     );
   }
 
-  function getInterviewsStats() {
+  function getInterviewsStats(): Array<InterviewsStats> {
     if (!interviews.value) return [];
 
     const statsMap = interviews.value.reduce(
@@ -48,9 +48,9 @@ const useInterviewsStore = defineStore("interviews", () => {
       {} as Record<string, number>
     );
 
-    return Object.entries(statsMap).map(([name, value]) => ({
-      name,
+    return Object.entries(statsMap).map(([name, value]): InterviewsStats => ({
       value,
+      name
     }));
   }
 

@@ -2,7 +2,6 @@ import { defineStore } from "pinia";
 import { ref } from "vue";
 
 type AlertIcon =
-  | false
   | "mdi-alert-circle-outline"
   | "mdi-check-circle"
   | undefined;
