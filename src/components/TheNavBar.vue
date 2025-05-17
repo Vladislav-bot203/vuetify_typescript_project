@@ -5,6 +5,7 @@
     permanent
     @click="rail = false"
     class="bg-blue-grey-darken-3"
+    elevation="24"
   >
     <v-list-item prepend-icon="mdi-account-circle" title="User name" nav>
       <template v-slot:append>
