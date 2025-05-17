@@ -18,7 +18,7 @@
     <v-tooltip v-else text="No stages added" location="top">
       <template v-slot:activator="{ props: activatorProps }">
         <v-avatar v-bind="activatorProps" color="yellow-darken-4" size="20"
-          >0</v-avatar
+          >-</v-avatar
         >
       </template>
     </v-tooltip>
