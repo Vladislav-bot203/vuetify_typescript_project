@@ -7,15 +7,17 @@
     class="bg-blue-grey-darken-3"
     elevation="24"
   >
-    <v-list-item prepend-icon="mdi-account-circle" title="User name" nav>
-      <template v-slot:append>
-        <v-btn
-          icon="mdi-chevron-left"
-          variant="text"
-          @click.stop="rail = !rail"
-        ></v-btn>
-      </template>
-    </v-list-item>
+    <v-list density="compact" nav>
+      <v-list-item prepend-icon="mdi-account-circle" title="User name" nav>
+        <template v-slot:append>
+          <v-btn
+            icon="mdi-chevron-left"
+            variant="text"
+            @click.stop="rail = !rail"
+          ></v-btn>
+        </template>
+      </v-list-item>
+    </v-list>
 
     <v-divider></v-divider>
 
