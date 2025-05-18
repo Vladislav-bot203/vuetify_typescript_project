@@ -6,52 +6,80 @@
     <template #body>
       <v-card-item>
         <v-form
-          class="bg-blue-grey-darken-2 d-flex flex-column ga-2 pa-10 rounded-lg"
+          class="bg-blue-grey-darken-2 d-flex flex-column ga-10 pa-10 rounded-lg"
           @submit.prevent="sendData"
           ref="formRef"
         >
-          <v-text-field
-            autocomplete="off"
-            clearable
-            variant="outlined"
-            :label="t('home.companyInput')"
-            v-model="company"
-          ></v-text-field>
-          <v-text-field
-            autocomplete="off"
-            clearable
-            variant="outlined"
-            :label="t('home.descriptionLinkInput')"
-            v-model="description"
-          ></v-text-field>
-          <v-text-field
-            autocomplete="off"
-            clearable
-            variant="outlined"
-            :label="t('home.contactsNameInput')"
-            v-model="name"
-          ></v-text-field>
-          <v-text-field
-            autocomplete="off"
-            clearable
-            variant="outlined"
-            :label="t('home.telegramInput')"
-            v-model="telegram"
-          ></v-text-field>
-          <v-text-field
-            autocomplete="off"
-            clearable
-            variant="outlined"
-            :label="t('home.whatsAppInput')"
-            v-model="whatsapp"
-          ></v-text-field>
-          <v-text-field
-            autocomplete="off"
-            clearable
-            variant="outlined"
-            :label="t('home.phoneInput')"
-            v-model="phonenumber"
-          ></v-text-field>
+          <v-container class="pa-0">
+            <v-text-field
+              autocomplete="off"
+              clearable
+              variant="outlined"
+              :label="t('home.companyInput')"
+              v-model="form.company"
+            ></v-text-field>
+            <app-validation-error
+              :errors="errors?.company"
+            ></app-validation-error>
+          </v-container>
+          <v-container class="pa-0">
+            <v-text-field
+              autocomplete="off"
+              clearable
+              variant="outlined"
+              :label="t('home.descriptionLinkInput')"
+              v-model="form.description"
+            ></v-text-field>
+            <app-validation-error
+              :errors="errors?.description"
+            ></app-validation-error>
+          </v-container>
+          <v-container class="pa-0">
+            <v-text-field
+              autocomplete="off"
+              clearable
+              variant="outlined"
+              :label="t('home.contactsNameInput')"
+              v-model="form.name"
+            ></v-text-field>
+            <app-validation-error :errors="errors?.name"></app-validation-error>
+          </v-container>
+          <v-container class="pa-0">
+            <v-text-field
+              autocomplete="off"
+              clearable
+              variant="outlined"
+              :label="t('home.telegramInput')"
+              v-model="form.telegram"
+            ></v-text-field>
+            <app-validation-error
+              :errors="errors?.telegram"
+            ></app-validation-error>
+          </v-container>
+          <v-container class="pa-0">
+            <v-text-field
+              autocomplete="off"
+              clearable
+              variant="outlined"
+              :label="t('home.whatsAppInput')"
+              v-model="form.whatsApp"
+            ></v-text-field>
+            <app-validation-error
+              :errors="errors?.whatsApp"
+            ></app-validation-error>
+          </v-container>
+          <v-container class="pa-0">
+            <v-text-field
+              autocomplete="off"
+              clearable
+              variant="outlined"
+              :label="t('home.phoneInput')"
+              v-model="form.phoneNumber"
+            ></v-text-field>
+            <app-validation-error
+              :errors="errors?.phoneNumber"
+            ></app-validation-error>
+          </v-container>
           <v-btn
             type="submit"
             :text="t('home.buttonText')"
@@ -73,6 +101,7 @@
 
 <script setup lang="ts">
 import AppPage from "../components/AppPage.vue";
+import AppValidationError from "../components/AppValidationError.vue";
 import useCreateInterview from "../hooks/createInterview";
 import { useI18n } from "vue-i18n";
 
@@ -80,16 +109,6 @@ const { t } = useI18n();
 
 const createInterview = useCreateInterview();
 
-const {
-  company,
-  description,
-  name,
-  telegram,
-  whatsapp,
-  phonenumber,
-  sendData,
-  formRef,
-  submitButtonActivity,
-  isLoading,
-} = createInterview;
+const { sendData, formRef, submitButtonActivity, isLoading, form, errors } =
+  createInterview;
 </script>
