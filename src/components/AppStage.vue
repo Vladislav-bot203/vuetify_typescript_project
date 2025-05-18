@@ -6,12 +6,12 @@
     <v-text-field
       autocomplete="off"
       variant="outlined"
-      label="Stage Name"
+      :label="t('interview.stageNameInput')"
       width="100%"
       v-model="props.stage.name"
     ></v-text-field>
     <v-date-picker
-      title="Interview date"
+      :title="t('interview.calendarTitle')"
       color="red-lighten-1"
       theme="dark"
       bg-color="blue-grey-darken-2"
@@ -22,7 +22,7 @@
     </v-date-picker>
     <v-textarea
       clearable
-      label="Comments"
+      :label="t('interview.stageTextArea')"
       variant="solo-filled"
       class="mt-6"
       width="90%"
@@ -39,8 +39,10 @@
 </template>
 
 <script lang="ts" setup>
-import { watch, defineEmits } from "vue";
+import { useI18n } from "vue-i18n";
+import { watch } from "vue";
 
+const { t } = useI18n();
 const props = defineProps(["stage"]);
 const emits = defineEmits(["update:stage", "remove"]);
 

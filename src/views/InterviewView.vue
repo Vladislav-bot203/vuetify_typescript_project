@@ -1,7 +1,7 @@
 <template>
   <app-page>
     <template #title>
-      <v-card-title>Editing Interview</v-card-title>
+      <v-card-title>{{ t("page.title[3]") }}</v-card-title>
     </template>
 
     <template #body>
@@ -24,37 +24,37 @@
           <v-text-field
             autocomplete="off"
             variant="outlined"
-            label="Company"
+            :label="t('interview.companyInput')"
             v-model="company"
           ></v-text-field>
           <v-text-field
             autocomplete="off"
             variant="outlined"
-            label="Description link"
+            :label="t('interview.companyDescriptionInput')"
             v-model="description"
           ></v-text-field>
           <v-text-field
             autocomplete="off"
             variant="outlined"
-            label="HR Name"
+            :label="t('interview.hrNameInput')"
             v-model="name"
           ></v-text-field>
           <v-text-field
             autocomplete="off"
             variant="outlined"
-            label="Telegram"
+            :label="t('interview.telegramInput')"
             v-model="telegram"
           ></v-text-field>
           <v-text-field
             autocomplete="off"
             variant="outlined"
-            label="WhatsApp"
+            :label="t('interview.whatsAppInput')"
             v-model="whatsApp"
           ></v-text-field>
           <v-text-field
             autocomplete="off"
             variant="outlined"
-            label="Phone Number"
+            :label="t('interview.phoneInput')"
             v-model="phone"
           ></v-text-field>
           <v-container
@@ -65,20 +65,20 @@
               type="number"
               variant="outlined"
               autocomplete="off"
-              label="Salary From"
+              :label="t('interview.salaryFromInput')"
               v-model="salaryFrom"
             ></v-text-field>
             <v-text-field
               type="number"
               variant="outlined"
               autocomplete="off"
-              label="Salary To"
+              :label="t('interview.salaryToInput')"
               v-model="salaryTo"
             ></v-text-field>
           </v-container>
           <v-btn
             prepend-icon="mdi-plus"
-            text="Add new stage"
+            :text="t('interview.addButtonText')"
             color="primary"
             @click="addStage"
           ></v-btn>
@@ -97,13 +97,13 @@
           min-width="350"
         >
           <v-radio-group inline class="d-flex justify-center" v-model="result">
-            <v-radio value="Offer" label="Offer" color="success"></v-radio>
-            <v-radio value="Refusal" label="Refusal" color="error"></v-radio>
-            <v-radio value="Unset" label="Unset" color="primary"></v-radio>
+            <v-radio value="Offer" :label="t('interview.offerRadioButton')" color="success"></v-radio>
+            <v-radio value="Refusal" :label="t('interview.refusalRadioButton')" color="error"></v-radio>
+            <v-radio value="Unset" :label="t('interview.unsetRadioButton')" color="primary"></v-radio>
           </v-radio-group>
         </v-container>
         <v-btn
-          text="save changes"
+          :text="t('interview.saveButtonText')"
           class="mb-10"
           color="primary"
           @click="editInterview.saveChanges"
@@ -125,8 +125,10 @@ import { onMounted } from "vue";
 import AppPage from "../components/AppPage.vue";
 import useEditInterview from "../hooks/editInterview";
 import AppStage from "../components/AppStage.vue";
+import { useI18n } from "vue-i18n";
 
 const editInterview = useEditInterview();
+const { t } = useI18n();
 
 const {
   getInterview,

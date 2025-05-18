@@ -1,7 +1,7 @@
 <template>
   <app-page>
     <template #title>
-      <v-card-title>{{ t("page.title", 0) }}</v-card-title>
+      <v-card-title>{{ t("page.title[0]") }}</v-card-title>
     </template>
     <template #body>
       <v-card-item>

@@ -1,0 +1,62 @@
+{
+  "page": {
+    "title": [
+      "Create new interview",
+      "Interviews",
+      "Statistics",
+      "Editing interview"
+    ]
+  },
+  "auth": {
+    "title": "LogIn | Create an acoount",
+    "eMailInputLabel": "E-mail",
+    "passwordInputLabel": "Password",
+    "passwordConfirmInputLabel": "Confirm your password",
+    "eMailInputPlaceholder": "Input your e-mail adress",
+    "passwordConfirmInputPlaceholder": "Confirm your password",
+    "passwordInputPlaceholder": "Input your password",
+    "buttonText": "LogIn | Create"
+  },
+  "home": {
+    "companyInput": "Company *",
+    "descriptionLinkInput": "Company description link *",
+    "contactsNameInput": "HR name *",
+    "telegramInput": "Telegram username",
+    "whatsAppInput": "WhatsApp",
+    "phoneInput": "Phone number",
+    "buttonText": "create"
+  },
+  "interviews": {
+    "tableHeaders": {
+      "0": "Company",
+      "1": "HR Name",
+      "2": "Vacancy",
+      "3": "Contacts",
+      "4": "Passed stages",
+      "5": "Salary",
+      "6": "Result",
+      "7": "Actions"
+    },
+    "descriptionLink": "Go to vacancy description",
+    "unsetProperty": "Unset",
+    "searchInputLabel": "Search"
+  },
+  "interview": {
+    "companyInput": "Company",
+    "companyDescriptionInput": "Description link",
+    "hrNameInput": "HR Name",
+    "telegramInput": "Telegram",
+    "whatsAppInput": "WhatsApp",
+    "phoneInput": "Phone Number",
+    "salaryFromInput": "Salary from",
+    "salaryToInput": "Salary to",
+    "addButtonText": "add new stage",
+    "saveButtonText": "save new changes",
+    "unsetRadioButton": "Unset",
+    "refusalRadioButton": "Refusal",
+    "offerRadioButton": "Offer",
+    "stageNameInput": "Stage Name",
+    "stageTextArea": "Comments",
+    "calendarTitle": "interview date"
+  }
+}

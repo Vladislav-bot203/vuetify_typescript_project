@@ -1,11 +1,11 @@
 <template>
   <app-page>
     <template #title>
-      <v-card-title>Interviews</v-card-title>
+      <v-card-title>{{ t("page.title[1]") }}</v-card-title>
     </template>
     <template #body>
       <v-text-field
-        label="Search"
+        :label="t('interviews.searchInputLabel')"
         prepend-inner-icon="mdi-magnify"
         variant="outlined"
         hide-details
@@ -41,12 +41,12 @@
         </template>
 
         <template #item.result="{ item }">
-          <app-result :result="item.result ?? 'Unset'"></app-result>
+          <app-result :result="item.result ?? t('interviews.unsetProperty')"></app-result>
         </template>
 
         <template #item.salaryFrom="{ item }">
           <span v-if="item.salaryFrom">$ {{ item.salaryFrom }}</span>
-          <v-chip v-else size="small" draggable variant="flat">Unset</v-chip>
+          <v-chip v-else size="small" draggable variant="flat">{{ t("interviews.unsetProperty") }}</v-chip>
         </template>
 
         <template #item.stages="{ item }">
