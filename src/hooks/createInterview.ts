@@ -28,7 +28,7 @@ const formSchema = z.object({
     .max(15, { message: "The maximum phone number length is 15 characters" })
     .regex(/^[+\d][\d\s\-()]*$/, {
       message:
-        "The phone number must incluse only spaces, numbers, '-', '(', ')' or '+' in the beginning",
+        "The phone number must include only spaces, numbers, '-', '(', ')' or '+' in the beginning",
     })
     .optional()
     .or(z.literal(""))
