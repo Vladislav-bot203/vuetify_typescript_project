@@ -61,7 +61,7 @@ export default function useCreateInterview() {
   async function logout(): Promise<void> {
     await signOut(getAuth());
     userStore.userId = "";
-    router.push({ name: "Auth" });
+    await router.push({ name: "Auth" });
   }
 
   async function sendData(): Promise<void> {
